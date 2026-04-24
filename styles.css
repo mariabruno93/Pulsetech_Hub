@@ -33,7 +33,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
-  animation: breathe var(--beat) ease-in-out infinite;
+  animation: breathe var(--beat) ease-in-out 3 forwards;
 }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
@@ -81,7 +81,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   border-radius: 50%;
   background: var(--red);
   box-shadow: 0 0 6px var(--red), 0 0 14px var(--red);
-  animation: heart-led var(--beat) ease-in-out infinite;
+  animation: led-idle 3s ease-in-out infinite;
   display: inline-block;
 }
 .nav-led.small { width: 7px; height: 7px; }
@@ -123,7 +123,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   inset: 0;
   background: radial-gradient(circle at 50% 42%, rgba(255,34,0,0.12) 0%, rgba(255,34,0,0.04) 25%, transparent 55%);
   pointer-events: none;
-  animation: aura-breathe var(--beat) ease-in-out infinite;
+  animation: aura-breathe var(--beat) ease-in-out 3 forwards;
 }
 .hero-inner {
   display: flex;
@@ -136,57 +136,77 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   padding: 6rem 2rem 4rem;
 }
 
-/* ── Corazón ── */
+/* ── Corazón anatómico ── */
 .heart-wrapper {
   position: relative;
-  width: 320px; height: 300px;
+  width: 340px; height: 360px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .heart-aura {
   position: absolute;
-  inset: -40px;
+  inset: -20px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255,68,0,0.35) 0%, rgba(255,34,0,0.12) 40%, transparent 70%);
-  filter: blur(20px);
-  animation: aura-breathe var(--beat) ease-in-out infinite;
+  filter: blur(22px);
+  animation: aura-breathe var(--beat) ease-in-out 3 forwards;
 }
 .heart-ring {
   position: absolute;
   border-radius: 50%;
   border: 1px solid var(--red);
   pointer-events: none;
-  animation: heart-ring-expand calc(var(--beat) * 3) ease-out infinite;
+  width: 280px; height: 280px;
+  animation: heart-ring-expand calc(var(--beat) * 2) ease-out 1 forwards;
   opacity: 0;
 }
-.heart-ring.r1 { width: 240px; height: 240px; animation-delay: 0s; }
-.heart-ring.r2 { width: 240px; height: 240px; animation-delay: calc(var(--beat) * 1); }
-.heart-ring.r3 { width: 240px; height: 240px; animation-delay: calc(var(--beat) * 2); }
+.heart-ring.r1 { animation-delay: calc(var(--beat) * 0.1); }
+.heart-ring.r2 { animation-delay: calc(var(--beat) * 1.1); }
+.heart-ring.r3 { animation-delay: calc(var(--beat) * 2.1); }
 
 .heart-svg {
   position: relative;
   z-index: 2;
-  width: 220px;
+  width: 280px;
   height: auto;
   overflow: visible;
-  transform-origin: 50% 55%;
-  animation: heart-beat var(--beat) ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(255,34,0,0.6)) drop-shadow(0 0 30px rgba(255,34,0,0.25));
+  transform-origin: 50% 60%;
+  animation: heart-beat var(--beat) ease-in-out 3 forwards;
+  filter: drop-shadow(0 0 10px rgba(255,34,0,0.55)) drop-shadow(0 0 24px rgba(255,34,0,0.2));
 }
 .heart-body {
-  animation: heart-fill-pulse var(--beat) ease-in-out infinite;
+  animation: heart-fill-pulse var(--beat) ease-in-out 3 forwards;
 }
 .heart-outline {
-  animation: heart-outline-dash 8s linear infinite;
+  animation: heart-outline-dash 10s linear infinite;
 }
+.heart-vessels { opacity: 0.9; }
+.heart-panels  { opacity: 1; }
+.heart-rivets circle { filter: drop-shadow(0 0 1.5px rgba(255,68,0,0.6)); }
+.heart-leds circle {
+  filter: drop-shadow(0 0 3px #ffaa66);
+  animation: led-flicker 4s ease-in-out infinite;
+}
+.heart-leds circle:nth-child(2) { animation-delay: 0.7s; }
+.heart-leds circle:nth-child(3) { animation-delay: 1.3s; }
+.heart-leds circle:nth-child(4) { animation-delay: 2.1s; }
+.heart-leds circle:nth-child(5) { animation-delay: 2.8s; }
+.heart-leds circle:nth-child(6) { animation-delay: 3.4s; }
+.heart-leds circle:nth-child(7) { animation-delay: 0.3s; }
 .heart-circuit {
-  animation: heart-circuit-glow var(--beat) ease-in-out infinite;
+  animation: heart-circuit-glow var(--beat) ease-in-out 3 forwards;
 }
 .heart-core {
-  animation: heart-core-pulse var(--beat) ease-in-out infinite;
+  animation: heart-core-pulse var(--beat) ease-in-out 3 forwards,
+             core-idle 3.5s ease-in-out 4s infinite;
   transform-origin: center;
   transform-box: fill-box;
+  filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px #ff6633);
+}
+.heart-core-ring {
+  transform-origin: 130px 148px;
+  animation: core-ring-rotate 14s linear infinite;
 }
 
 /* ── Título ── */
@@ -200,11 +220,11 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 .title-pulse {
   color: var(--white);
-  animation: title-glow-white var(--beat) ease-in-out infinite;
+  animation: title-glow-white var(--beat) ease-in-out 3 forwards;
 }
 .title-tech {
   color: var(--red);
-  animation: title-glow-red var(--beat) ease-in-out infinite;
+  animation: title-glow-red var(--beat) ease-in-out 3 forwards;
 }
 .title-hub {
   font-family: var(--mono);
@@ -241,7 +261,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   stroke-linejoin: round;
   filter: drop-shadow(0 0 3px var(--red));
   stroke-dasharray: 1600;
-  animation: wave-draw calc(var(--beat) * 2) linear infinite;
+  animation: wave-draw calc(var(--beat) * 2) linear 2 forwards,
+             wave-fade 1.2s ease-out calc(var(--beat) * 4) forwards;
 }
 
 /* ── CTA ── */
@@ -456,7 +477,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   opacity: 1;
   background: var(--red);
   box-shadow: 0 0 6px var(--red), 0 0 14px var(--red);
-  animation: heart-led var(--beat) ease-in-out infinite;
+  animation: led-idle 2s ease-in-out infinite;
 }
 .card-badge {
   position: absolute;
@@ -588,7 +609,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   border-radius: 50%;
   background: var(--red);
   box-shadow: 0 0 6px var(--red);
-  animation: heart-led var(--beat) ease-in-out infinite;
+  animation: led-idle 2.5s ease-in-out infinite;
   display: inline-block;
   position: relative;
   z-index: 1;
@@ -638,12 +659,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   width: 4px;
   background: var(--red3);
   border-radius: 1px;
-  animation: signal-pulse var(--beat) ease-in-out infinite;
+  animation: signal-pulse 2.2s ease-in-out infinite;
 }
 .s1 { height: 5px;  animation-delay: 0s; }
-.s2 { height: 9px;  animation-delay: calc(var(--beat) * 0.1); }
-.s3 { height: 13px; animation-delay: calc(var(--beat) * 0.2); }
-.s4 { height: 18px; animation-delay: calc(var(--beat) * 0.3); }
+.s2 { height: 9px;  animation-delay: 0.2s; }
+.s3 { height: 13px; animation-delay: 0.4s; }
+.s4 { height: 18px; animation-delay: 0.6s; }
 
 /* ─────────────────────────────────────────
    ANIMATIONS · timed to heartbeat
@@ -682,10 +703,30 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   32%           { transform: scale(1.3); opacity: 0.9; }
 }
 
-@keyframes heart-led {
-  0%, 45%, 100% { opacity: 0.5; box-shadow: 0 0 3px var(--red); }
-  10%           { opacity: 1;   box-shadow: 0 0 8px var(--red), 0 0 18px var(--red); }
-  32%           { opacity: 0.9; box-shadow: 0 0 6px var(--red), 0 0 12px var(--red); }
+@keyframes led-idle {
+  0%, 100% { opacity: 0.75; box-shadow: 0 0 5px var(--red), 0 0 10px rgba(255,34,0,0.4); }
+  50%      { opacity: 1;    box-shadow: 0 0 8px var(--red), 0 0 16px var(--red); }
+}
+
+@keyframes led-flicker {
+  0%, 90%, 100% { opacity: 0.55; }
+  93%           { opacity: 1; }
+  96%           { opacity: 0.4; }
+}
+
+@keyframes core-idle {
+  0%, 100% { transform: scale(1);    opacity: 0.85; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes core-ring-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes wave-fade {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 
 @keyframes heart-ring-expand {
@@ -733,9 +774,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 
 @keyframes signal-pulse {
-  0%, 45%, 100% { opacity: 0.5; background: var(--red3); }
-  10%           { opacity: 1;   background: var(--red); }
-  32%           { opacity: 0.8; background: var(--red2); }
+  0%, 100% { opacity: 0.5; background: var(--red3); }
+  50%      { opacity: 1;   background: var(--red); }
 }
 
 @keyframes card-appear {
