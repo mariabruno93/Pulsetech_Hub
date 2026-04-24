@@ -167,49 +167,20 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .heart-ring.r2 { animation-delay: 1680ms; }
 .heart-ring.r3 { animation-delay: 2160ms; }
 
-.heart-svg {
+.heart-img {
   position: relative;
   z-index: 2;
-  width: 220px;
+  width: 240px;
   height: auto;
-  overflow: visible;
+  display: block;
   transform-origin: 50% 60%;
-  animation: heart-beat var(--intro) cubic-bezier(.45,.05,.55,.95) 1 forwards;
-  filter: drop-shadow(0 0 10px rgba(255,34,0,0.55)) drop-shadow(0 0 24px rgba(255,34,0,0.2));
-}
-.heart-body {
-  animation: heart-fill-pulse var(--intro) ease-in-out 1 forwards;
-}
-.heart-outline {
-  animation: heart-outline-dash 10s linear infinite;
-}
-.heart-vessels { opacity: 0.9; }
-.heart-panels  { opacity: 1; }
-.heart-rivets circle { filter: drop-shadow(0 0 1.5px rgba(255,68,0,0.6)); }
-.heart-leds circle {
-  filter: drop-shadow(0 0 3px #ffaa66);
-  animation: led-flicker 4s ease-in-out infinite;
-}
-.heart-leds circle:nth-child(2) { animation-delay: 0.7s; }
-.heart-leds circle:nth-child(3) { animation-delay: 1.3s; }
-.heart-leds circle:nth-child(4) { animation-delay: 2.1s; }
-.heart-leds circle:nth-child(5) { animation-delay: 2.8s; }
-.heart-leds circle:nth-child(6) { animation-delay: 3.4s; }
-.heart-leds circle:nth-child(7) { animation-delay: 0.3s; }
-.heart-circuit {
-  animation: heart-circuit-glow var(--intro) ease-in-out 1 forwards;
-}
-.heart-core {
-  animation: heart-core-pulse var(--intro) ease-in-out 1 forwards,
-             core-idle 3.5s ease-in-out 3s infinite;
-  transform-origin: center;
-  transform-box: fill-box;
-  filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px #ff6633);
-}
-.heart-core-ring {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: core-ring-rotate 14s linear infinite;
+  /* Latido + subtle pulse del brillo interior durante el ciclo de intro */
+  animation: heart-beat   var(--intro) cubic-bezier(.45,.05,.55,.95) 1 forwards,
+             heart-img-glow var(--intro) ease-in-out 1 forwards;
+  filter: drop-shadow(0 0 14px rgba(255,34,0,0.55))
+          drop-shadow(0 0 30px rgba(255,34,0,0.2));
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 /* ── Título ── */
@@ -690,52 +661,39 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   100% { transform: scale(1); }
 }
 
-@keyframes heart-fill-pulse {
-  0%, 100% { opacity: 0.75; }
-  50%      { opacity: 0.90; }
-  72%      { opacity: 1; }
-  90%      { opacity: 0.95; }
-}
-
-@keyframes heart-outline-dash {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: -56; }
-}
-
-@keyframes heart-circuit-glow {
-  0%, 100% { opacity: 0.5; }
-  50%      { opacity: 0.8;  filter: drop-shadow(0 0 2px var(--orange)); }
-  72%      { opacity: 1;    filter: drop-shadow(0 0 5px var(--orange)); }
-  90%      { opacity: 0.85; filter: drop-shadow(0 0 3px var(--orange)); }
-}
-
-@keyframes heart-core-pulse {
-  0%, 100% { transform: scale(1);    opacity: 0.85; }
-  50%      { transform: scale(1.35); opacity: 1; }
-  72%      { transform: scale(1.9);  opacity: 1; }
-  82%      { transform: scale(1.1);  opacity: 0.9; }
-  90%      { transform: scale(1.5);  opacity: 1; }
+/* Glow del drop-shadow sobre la imagen del corazón:
+   se intensifica en los tucs para simular que el LED interno late */
+@keyframes heart-img-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(255,34,0,0.5))
+            drop-shadow(0 0 26px rgba(255,34,0,0.15))
+            brightness(1) contrast(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgba(255,68,0,0.7))
+            drop-shadow(0 0 44px rgba(255,34,0,0.3))
+            brightness(1.08) contrast(1.05);
+  }
+  72% {
+    filter: drop-shadow(0 0 32px rgba(255,100,40,0.9))
+            drop-shadow(0 0 60px rgba(255,34,0,0.5))
+            brightness(1.2) contrast(1.12);
+  }
+  82% {
+    filter: drop-shadow(0 0 18px rgba(255,68,0,0.55))
+            drop-shadow(0 0 40px rgba(255,34,0,0.22))
+            brightness(1.04) contrast(1.02);
+  }
+  90% {
+    filter: drop-shadow(0 0 28px rgba(255,90,30,0.8))
+            drop-shadow(0 0 50px rgba(255,34,0,0.4))
+            brightness(1.15) contrast(1.08);
+  }
 }
 
 @keyframes led-idle {
   0%, 100% { opacity: 0.75; box-shadow: 0 0 5px var(--red), 0 0 10px rgba(255,34,0,0.4); }
   50%      { opacity: 1;    box-shadow: 0 0 8px var(--red), 0 0 16px var(--red); }
-}
-
-@keyframes led-flicker {
-  0%, 90%, 100% { opacity: 0.55; }
-  93%           { opacity: 1; }
-  96%           { opacity: 0.4; }
-}
-
-@keyframes core-idle {
-  0%, 100% { transform: scale(1);    opacity: 0.85; }
-  50%      { transform: scale(1.15); opacity: 1; }
-}
-
-@keyframes core-ring-rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
 }
 
 @keyframes wave-fade {
@@ -845,8 +803,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 
 @media (max-width: 600px) {
   .hero-inner { gap: 1.8rem; }
-  .heart-wrapper { width: 240px; height: 220px; }
-  .heart-svg { width: 170px; }
+  .heart-wrapper { width: 220px; height: 220px; }
+  .heart-img { width: 190px; }
+  .heart-ring { width: 190px; height: 190px; }
   .heart-ring.r3 { display: none; }
   .services-grid { grid-template-columns: 1fr; }
   .df3, .df4 { display: none; }
