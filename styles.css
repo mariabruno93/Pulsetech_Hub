@@ -156,10 +156,10 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 .heart-aura {
   position: absolute;
-  inset: -20px;
+  inset: -40px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,68,0,0.35) 0%, rgba(255,34,0,0.12) 40%, transparent 70%);
-  filter: blur(22px);
+  background: radial-gradient(circle, rgba(255,68,0,0.5) 0%, rgba(255,34,0,0.18) 40%, transparent 72%);
+  filter: blur(28px);
   animation: aura-breathe var(--intro) ease-in-out 1 forwards;
 }
 .heart-ring {
@@ -186,11 +186,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   /* Beat + internal glow sweep during intro cycle */
   animation: heart-beat     var(--intro) cubic-bezier(.45,.05,.55,.95) 1 forwards,
              heart-img-glow var(--intro) ease-in-out 1 forwards;
-  /* Black background of the PNG becomes invisible: bright pixels stay,
-     0,0,0 blends away against anything behind it */
+  /* Screen erases pure-black pixels by blending with the backdrop. */
   mix-blend-mode: screen;
-  filter: drop-shadow(0 0 14px rgba(255,34,0,0.55))
-          drop-shadow(0 0 30px rgba(255,34,0,0.2));
+  /* Radial mask cuts off the image's rectangular edges (and any watermark
+     near the corners), fading the heart smoothly into the void. */
+  -webkit-mask-image: radial-gradient(ellipse 48% 54% at 50% 48%, #000 72%, transparent 100%);
+          mask-image: radial-gradient(ellipse 48% 54% at 50% 48%, #000 72%, transparent 100%);
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -676,34 +677,15 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   100% { transform: scale(1); }
 }
 
-/* Glow del drop-shadow sobre la imagen del corazón:
-   se intensifica en los tucs para simular que el LED interno late */
+/* Pulse del brillo/contraste durante el ciclo de intro.
+   No usamos drop-shadow acá porque produciría una sombra rectangular
+   alrededor del box de la imagen — el glow lo da .heart-aura detrás. */
 @keyframes heart-img-glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 12px rgba(255,34,0,0.5))
-            drop-shadow(0 0 26px rgba(255,34,0,0.15))
-            brightness(1) contrast(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 22px rgba(255,68,0,0.7))
-            drop-shadow(0 0 44px rgba(255,34,0,0.3))
-            brightness(1.08) contrast(1.05);
-  }
-  72% {
-    filter: drop-shadow(0 0 32px rgba(255,100,40,0.9))
-            drop-shadow(0 0 60px rgba(255,34,0,0.5))
-            brightness(1.2) contrast(1.12);
-  }
-  82% {
-    filter: drop-shadow(0 0 18px rgba(255,68,0,0.55))
-            drop-shadow(0 0 40px rgba(255,34,0,0.22))
-            brightness(1.04) contrast(1.02);
-  }
-  90% {
-    filter: drop-shadow(0 0 28px rgba(255,90,30,0.8))
-            drop-shadow(0 0 50px rgba(255,34,0,0.4))
-            brightness(1.15) contrast(1.08);
-  }
+  0%, 100% { filter: brightness(1)    contrast(1); }
+  50%      { filter: brightness(1.1)  contrast(1.08); }
+  72%      { filter: brightness(1.3)  contrast(1.18); }
+  82%      { filter: brightness(1.08) contrast(1.05); }
+  90%      { filter: brightness(1.22) contrast(1.12); }
 }
 
 @keyframes led-idle {
