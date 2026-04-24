@@ -145,10 +145,10 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   gap: 0;
 }
 
-/* ── Anatomical heart ── */
+/* ── Hero hero image (robot hands) ── */
 .heart-wrapper {
   position: relative;
-  width: 200px; height: 200px;
+  width: 240px; height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,9 +156,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 .heart-aura {
   position: absolute;
-  inset: -40px;
+  inset: -30px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,68,0,0.5) 0%, rgba(255,34,0,0.18) 40%, transparent 72%);
+  background: radial-gradient(circle, rgba(255,68,0,0.55) 0%, rgba(255,34,0,0.2) 40%, transparent 72%);
   filter: blur(28px);
   animation: aura-breathe var(--intro) ease-in-out 1 forwards;
 }
@@ -167,7 +167,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   border-radius: 50%;
   border: 1px solid var(--red);
   pointer-events: none;
-  width: 180px; height: 180px;
+  width: 240px; height: 240px;
   animation: heart-ring-expand 1400ms ease-out 1 forwards;
   opacity: 0;
 }
@@ -179,19 +179,20 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .heart-img {
   position: relative;
   z-index: 2;
-  width: 190px;
+  width: 230px;
   height: auto;
   display: block;
-  transform-origin: 50% 60%;
-  /* Beat + internal glow sweep during intro cycle */
+  transform-origin: 50% 50%;
+  /* Intro pulse + brightness sweep */
   animation: heart-beat     var(--intro) cubic-bezier(.45,.05,.55,.95) 1 forwards,
              heart-img-glow var(--intro) ease-in-out 1 forwards;
   /* Screen erases pure-black pixels by blending with the backdrop. */
   mix-blend-mode: screen;
-  /* Radial mask cuts off the image's rectangular edges (and any watermark
-     near the corners), fading the heart smoothly into the void. */
-  -webkit-mask-image: radial-gradient(ellipse 48% 54% at 50% 48%, #000 72%, transparent 100%);
-          mask-image: radial-gradient(ellipse 48% 54% at 50% 48%, #000 72%, transparent 100%);
+  /* Generous radial mask: keeps the hands (which extend diagonally into
+     the corners) fully visible and only fades the outermost corners,
+     including the bottom-right corner where the Gemini watermark lives. */
+  -webkit-mask-image: radial-gradient(ellipse 56% 58% at 50% 50%, #000 82%, transparent 100%);
+          mask-image: radial-gradient(ellipse 56% 58% at 50% 50%, #000 82%, transparent 100%);
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -800,9 +801,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 
 @media (max-width: 600px) {
   .hero-inner { gap: 0.9rem; }
-  .heart-wrapper { width: 170px; height: 170px; }
-  .heart-img { width: 160px; }
-  .heart-ring { width: 155px; height: 155px; }
+  .heart-wrapper { width: 200px; height: 200px; }
+  .heart-img { width: 195px; }
+  .heart-ring { width: 200px; height: 200px; }
   .heart-ring.r3 { display: none; }
   .services-grid { grid-template-columns: 1fr; }
   .df3, .df4 { display: none; }
