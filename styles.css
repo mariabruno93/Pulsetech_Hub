@@ -1,51 +1,52 @@
 /* ─────────────────────────────────────────
    PULSE TECH HUB — Stylesheet
-   Inspired by Pink Floyd "Pulse" + Tech
+   Heart beating in the void · 72 bpm
    ───────────────────────────────────────── */
 
-/* ── Tokens ── */
 :root {
   --black:   #000000;
-  --deep:    #050505;
-  --dark:    #0a0a0a;
-  --panel:   #0f0f0f;
-  --border:  #1a1a1a;
+  --deep:    #030308;
+  --dark:    #07070d;
+  --panel:   #0c0c14;
+  --border:  #1a1a26;
   --red:     #ff2200;
   --red2:    #ff4400;
   --red3:    #cc1a00;
+  --orange:  #ff6633;
   --redglow: rgba(255, 34, 0, 0.35);
   --redsoft: rgba(255, 34, 0, 0.12);
   --white:   #ffffff;
-  --gray:    #888888;
-  --gray2:   #444444;
+  --gray:    #8a8a9a;
+  --gray2:   #3a3a46;
   --mono:    'Share Tech Mono', monospace;
   --orb:     'Orbitron', sans-serif;
   --body:    'Rajdhani', sans-serif;
+  --beat:    833ms;    /* 72 bpm · lub-dub-pause */
 }
 
-/* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--black);
+  background: radial-gradient(ellipse 90% 60% at 50% 40%, #0a0510 0%, #030308 55%, #000000 100%);
   color: var(--white);
   font-family: var(--body);
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
+  animation: breathe var(--beat) ease-in-out infinite;
 }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* ── Canvas (circuit background) ── */
-#circuit-canvas {
+/* ── Canvases ── */
+#cosmos-canvas, #pulse-canvas {
   position: fixed;
   inset: 0;
-  z-index: 0;
   pointer-events: none;
-  opacity: 0.18;
 }
+#cosmos-canvas { z-index: 0; opacity: 0.85; }
+#pulse-canvas  { z-index: 1; opacity: 0.7; }
 
 /* ── Nav ── */
 .nav {
@@ -56,12 +57,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 4rem;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.92) 0%, transparent 100%);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s, background 0.3s;
 }
 .nav.scrolled {
-  background: rgba(5,5,5,0.97);
+  background: rgba(3,3,8,0.97);
   border-bottom-color: var(--border);
   backdrop-filter: blur(10px);
 }
@@ -80,14 +81,11 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   border-radius: 50%;
   background: var(--red);
   box-shadow: 0 0 6px var(--red), 0 0 14px var(--red);
-  animation: led-blink 2.5s ease-in-out infinite;
+  animation: heart-led var(--beat) ease-in-out infinite;
   display: inline-block;
 }
 .nav-led.small { width: 7px; height: 7px; }
-.nav-links {
-  display: flex;
-  gap: 2.5rem;
-}
+.nav-links { display: flex; gap: 2.5rem; }
 .nav-links a {
   font-family: var(--mono);
   font-size: 0.78rem;
@@ -112,7 +110,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 /* ── Hero ── */
 .hero {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -123,56 +121,75 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,34,0,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 42%, rgba(255,34,0,0.12) 0%, rgba(255,34,0,0.04) 25%, transparent 55%);
   pointer-events: none;
+  animation: aura-breathe var(--beat) ease-in-out infinite;
 }
 .hero-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2.2rem;
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: 6rem 2rem 4rem;
 }
 
-/* ── Logo ── */
-.logo-wrapper {
+/* ── Corazón ── */
+.heart-wrapper {
   position: relative;
-  width: 260px; height: 260px;
+  width: 320px; height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.logo-ring {
+.heart-aura {
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,68,0,0.35) 0%, rgba(255,34,0,0.12) 40%, transparent 70%);
+  filter: blur(20px);
+  animation: aura-breathe var(--beat) ease-in-out infinite;
+}
+.heart-ring {
   position: absolute;
   border-radius: 50%;
   border: 1px solid var(--red);
-  animation: ring-pulse 4s ease-in-out infinite;
+  pointer-events: none;
+  animation: heart-ring-expand calc(var(--beat) * 3) ease-out infinite;
+  opacity: 0;
 }
-.ring-1 { width: 120px; height: 120px; opacity: 0.8; animation-delay: 0s; }
-.ring-2 { width: 170px; height: 170px; opacity: 0.5; animation-delay: 0.6s; }
-.ring-3 { width: 220px; height: 220px; opacity: 0.3; animation-delay: 1.2s; }
-.ring-4 { width: 260px; height: 260px; opacity: 0.15; animation-delay: 1.8s; }
-.logo-core {
+.heart-ring.r1 { width: 240px; height: 240px; animation-delay: 0s; }
+.heart-ring.r2 { width: 240px; height: 240px; animation-delay: calc(var(--beat) * 1); }
+.heart-ring.r3 { width: 240px; height: 240px; animation-delay: calc(var(--beat) * 2); }
+
+.heart-svg {
   position: relative;
   z-index: 2;
-  width: 160px; height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 220px;
+  height: auto;
+  overflow: visible;
+  transform-origin: 50% 55%;
+  animation: heart-beat var(--beat) ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(255,34,0,0.6)) drop-shadow(0 0 30px rgba(255,34,0,0.25));
 }
-.logo-svg { width: 100%; height: 100%; overflow: visible; }
-.led-core {
-  filter: blur(2px);
-  animation: led-core-pulse 2s ease-in-out infinite;
+.heart-body {
+  animation: heart-fill-pulse var(--beat) ease-in-out infinite;
 }
-.led-ring {
-  animation: led-ring-expand 2s ease-in-out infinite;
+.heart-outline {
+  animation: heart-outline-dash 8s linear infinite;
+}
+.heart-circuit {
+  animation: heart-circuit-glow var(--beat) ease-in-out infinite;
+}
+.heart-core {
+  animation: heart-core-pulse var(--beat) ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
 }
 
-/* ── Hero text ── */
+/* ── Título ── */
 .hero-title-block { line-height: 1; }
 .hero-title {
   font-family: var(--orb);
@@ -183,15 +200,11 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 .title-pulse {
   color: var(--white);
-  text-shadow:
-    0 0 20px rgba(255,255,255,0.3),
-    0 0 60px rgba(255,255,255,0.1);
+  animation: title-glow-white var(--beat) ease-in-out infinite;
 }
 .title-tech {
   color: var(--red);
-  text-shadow:
-    0 0 20px var(--redglow),
-    0 0 60px rgba(255,34,0,0.2);
+  animation: title-glow-red var(--beat) ease-in-out infinite;
 }
 .title-hub {
   font-family: var(--mono);
@@ -213,16 +226,13 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   color: var(--red);
 }
 
-/* ── Pulse wave (EKG) ── */
+/* ── EKG ── */
 .pulse-wave-container {
   width: min(600px, 90vw);
   height: 60px;
   overflow: hidden;
 }
-.pulse-wave {
-  width: 100%;
-  height: 100%;
-}
+.pulse-wave { width: 100%; height: 100%; }
 .wave-line {
   fill: none;
   stroke: var(--red);
@@ -230,10 +240,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   stroke-linecap: round;
   stroke-linejoin: round;
   filter: drop-shadow(0 0 3px var(--red));
-  animation: wave-scroll 3s linear infinite;
   stroke-dasharray: 1600;
-  stroke-dashoffset: 1600;
-  animation: wave-draw 3s linear infinite;
+  animation: wave-draw calc(var(--beat) * 2) linear infinite;
 }
 
 /* ── CTA ── */
@@ -263,29 +271,109 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .hero-cta:hover { color: var(--white); border-color: var(--red); }
 .hero-cta:hover::before { transform: scaleX(1); }
 .hero-cta svg { width: 16px; height: 16px; stroke-width: 2; transition: transform 0.3s; }
-.hero-cta:hover svg { transform: rotate(90deg) translateY(3px); }
+.hero-cta:hover svg { transform: rotate(90deg); }
 
-/* ── Floating data labels ── */
+/* ── Datos flotantes ── */
 .data-float {
   position: absolute;
   font-family: var(--mono);
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   color: var(--red);
-  opacity: 0.5;
-  animation: float-drift 6s ease-in-out infinite;
+  opacity: 0.55;
+  animation: float-drift 7s ease-in-out infinite;
+  pointer-events: none;
+  white-space: nowrap;
 }
-.df1 { top: 20%; left: 6%;  animation-delay: 0s; }
-.df2 { top: 30%; right: 7%; animation-delay: 1.5s; }
-.df3 { bottom: 28%; left: 9%; animation-delay: 3s; }
-.df4 { bottom: 22%; right: 6%; animation-delay: 4.5s; }
+.df1 { top: 18%; left: 5%;   animation-delay: 0s; }
+.df2 { top: 28%; right: 6%;  animation-delay: 1.4s; }
+.df3 { top: 58%; left: 4%;   animation-delay: 2.8s; }
+.df4 { bottom: 22%; right: 5%; animation-delay: 4.2s; }
+.df5 { top: 42%; right: 3%;  animation-delay: 5.6s; }
+.df6 { bottom: 30%; left: 7%; animation-delay: 3.5s; }
 
-/* ── Services ── */
-.services {
+/* ── How it works ── */
+.how {
+  position: relative;
+  z-index: 2;
+  padding: 6rem 4rem;
+  background: linear-gradient(to bottom, transparent, rgba(3,3,8,0.85) 20%, rgba(3,3,8,0.85) 80%, transparent);
+}
+.how-lead {
+  text-align: center;
+  font-family: var(--orb);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin: -2rem auto 3.5rem;
+  max-width: 700px;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--red3), var(--red), var(--red3), transparent);
+  opacity: 0.4;
+  z-index: 0;
+}
+.step {
+  background: rgba(12,12,20,0.7);
+  border: 1px solid var(--border);
+  padding: 2.5rem 1.8rem;
+  text-align: center;
   position: relative;
   z-index: 1;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s;
+}
+.step:hover {
+  border-color: var(--red3);
+  background: rgba(20,10,10,0.8);
+  transform: translateY(-4px);
+}
+.step-num {
+  font-family: var(--orb);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--red);
+  margin-bottom: 1.2rem;
+}
+.step-icon {
+  width: 54px; height: 54px;
+  margin: 0 auto 1.2rem;
+  color: var(--red);
+}
+.step-icon svg { width: 100%; height: 100%; stroke-width: 1.5; }
+.step h3 {
+  font-family: var(--orb);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+.step p {
+  font-size: 0.92rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── Servicios ── */
+.services {
+  position: relative;
+  z-index: 2;
   padding: 6rem 4rem;
-  background: var(--deep);
+  background: rgba(3,3,8,0.6);
 }
 .section-header {
   display: flex;
@@ -294,14 +382,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   margin-bottom: 4rem;
   justify-content: center;
 }
-.section-header.left { justify-content: flex-start; }
 .section-line {
   height: 1px;
   flex: 1;
   background: linear-gradient(to right, transparent, var(--red3), transparent);
   max-width: 200px;
 }
-.section-line.short { max-width: 60px; }
 .section-title {
   font-family: var(--orb);
   font-size: 0.85rem;
@@ -318,11 +404,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   background: var(--border);
 }
 .service-card {
-  background: var(--panel);
+  background: rgba(12,12,20,0.85);
   padding: 2.5rem 2rem;
   position: relative;
   overflow: hidden;
   transition: background 0.3s;
+  backdrop-filter: blur(4px);
 }
 .service-card::before {
   content: '';
@@ -332,10 +419,10 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   opacity: 0;
   transition: opacity 0.3s;
 }
-.service-card:hover { background: #111; }
+.service-card:hover { background: rgba(20,10,10,0.9); }
 .service-card:hover::before { opacity: 1; }
 .service-card.featured {
-  background: #0d0d0d;
+  background: rgba(15,8,8,0.9);
   outline: 1px solid rgba(255,34,0,0.25);
 }
 .card-icon {
@@ -346,13 +433,13 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .card-icon svg { width: 100%; height: 100%; stroke-width: 1.5; }
 .service-card h3 {
   font-family: var(--orb);
-  font-size: 0.85rem;
-  letter-spacing: 0.15em;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
   color: var(--white);
   margin-bottom: 0.8rem;
 }
 .service-card p {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--gray);
   line-height: 1.7;
 }
@@ -369,7 +456,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   opacity: 1;
   background: var(--red);
   box-shadow: 0 0 6px var(--red), 0 0 14px var(--red);
-  animation: led-blink 1.5s ease-in-out infinite;
+  animation: heart-led var(--beat) ease-in-out infinite;
 }
 .card-badge {
   position: absolute;
@@ -382,128 +469,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   padding: 0.15rem 0.5rem;
 }
 
-/* ── About ── */
-.about {
-  position: relative;
-  z-index: 1;
-  padding: 6rem 4rem;
-  background: var(--black);
-}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  max-width: 1100px;
-  margin: 0 auto;
-  align-items: center;
-}
-.about-visual {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2.5rem;
-}
-.about-orb {
-  position: relative;
-  width: 220px; height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.orb-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid var(--red);
-  animation: ring-rotate 12s linear infinite;
-}
-.r1 { width: 80px;  height: 80px;  opacity: 0.6; }
-.r2 { width: 140px; height: 140px; opacity: 0.35; animation-direction: reverse; animation-duration: 18s; }
-.r3 { width: 200px; height: 200px; opacity: 0.15; animation-duration: 24s; }
-.orb-center {
-  position: relative;
-  z-index: 2;
-  width: 80px; height: 80px;
-}
-.orb-svg { width: 100%; height: 100%; }
-.about-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  width: 100%;
-}
-.stat {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 1rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.stat::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--red);
-  transform: scaleX(0);
-  transition: transform 0.4s;
-}
-.stat:hover::after { transform: scaleX(1); }
-.stat-num {
-  display: block;
-  font-family: var(--orb);
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--red);
-}
-.stat-label {
-  display: block;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  color: var(--gray);
-  margin-top: 0.2rem;
-}
-.about-lead {
-  font-family: var(--orb);
-  font-size: 1.2rem;
-  color: var(--red);
-  margin-bottom: 1.5rem;
-}
-.about-body {
-  color: var(--gray);
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  line-height: 1.8;
-}
-.about-body strong { color: var(--white); }
-.tech-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-.tech-tags span {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--red);
-  border: 1px solid var(--red3);
-  padding: 0.2rem 0.6rem;
-  background: var(--redsoft);
-  transition: all 0.2s;
-}
-.tech-tags span:hover {
-  background: rgba(255,34,0,0.2);
-  border-color: var(--red);
-}
-
-/* ── Contact ── */
+/* ── Contacto ── */
 .contact {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: 6rem 4rem;
-  background: var(--deep);
+  background: rgba(3,3,8,0.6);
 }
 .contact-grid {
   display: grid;
@@ -515,8 +486,15 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.8rem;
   justify-content: center;
+}
+.contact-lead {
+  font-family: var(--orb);
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 .contact-item {
   display: flex;
@@ -534,9 +512,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   flex-direction: column;
   gap: 2rem;
 }
-.form-group {
-  position: relative;
-}
+.form-group { position: relative; }
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -612,7 +588,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   border-radius: 50%;
   background: var(--red);
   box-shadow: 0 0 6px var(--red);
-  animation: led-blink 1.5s ease-in-out infinite;
+  animation: heart-led var(--beat) ease-in-out infinite;
   display: inline-block;
   position: relative;
   z-index: 1;
@@ -622,9 +598,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 /* ── Footer ── */
 .footer {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   border-top: 1px solid var(--border);
-  background: var(--black);
+  background: rgba(0,0,0,0.8);
   padding: 2rem 4rem;
 }
 .footer-inner {
@@ -662,35 +638,84 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   width: 4px;
   background: var(--red3);
   border-radius: 1px;
-  animation: signal-pulse 2s ease-in-out infinite;
+  animation: signal-pulse var(--beat) ease-in-out infinite;
 }
 .s1 { height: 5px;  animation-delay: 0s; }
-.s2 { height: 9px;  animation-delay: 0.2s; }
-.s3 { height: 13px; animation-delay: 0.4s; }
-.s4 { height: 18px; animation-delay: 0.6s; }
+.s2 { height: 9px;  animation-delay: calc(var(--beat) * 0.1); }
+.s3 { height: 13px; animation-delay: calc(var(--beat) * 0.2); }
+.s4 { height: 18px; animation-delay: calc(var(--beat) * 0.3); }
 
 /* ─────────────────────────────────────────
-   ANIMATIONS
+   ANIMATIONS · timed to heartbeat
    ───────────────────────────────────────── */
 
-@keyframes led-blink {
-  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--red), 0 0 14px var(--red); }
-  50%       { opacity: 0.3; box-shadow: 0 0 2px var(--red); }
+/* Latido cardíaco real: lub (contracción rápida) - dub (segundo pico menor) - pausa */
+@keyframes heart-beat {
+  0%   { transform: scale(1); }
+  10%  { transform: scale(1.09); }   /* lub */
+  22%  { transform: scale(0.97); }
+  32%  { transform: scale(1.05); }   /* dub */
+  45%  { transform: scale(0.99); }
+  100% { transform: scale(1); }      /* pausa larga */
 }
 
-@keyframes ring-pulse {
-  0%, 100% { transform: scale(1);   opacity: inherit; }
-  50%       { transform: scale(1.08); opacity: 0; }
+@keyframes heart-fill-pulse {
+  0%, 45%, 100% { opacity: 0.75; }
+  10%           { opacity: 1; }
+  32%           { opacity: 0.9; }
 }
 
-@keyframes led-core-pulse {
-  0%, 100% { opacity: 1; r: 12; filter: blur(2px) drop-shadow(0 0 6px #ff2200); }
-  50%       { opacity: 0.6; r: 14; filter: blur(4px) drop-shadow(0 0 16px #ff2200); }
+@keyframes heart-outline-dash {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -56; }
 }
 
-@keyframes led-ring-expand {
-  0%   { r: 20; opacity: 0.8; }
-  100% { r: 40; opacity: 0; }
+@keyframes heart-circuit-glow {
+  0%, 45%, 100% { opacity: 0.4; }
+  10%           { opacity: 1; filter: drop-shadow(0 0 4px var(--orange)); }
+  32%           { opacity: 0.85; }
+}
+
+@keyframes heart-core-pulse {
+  0%, 45%, 100% { transform: scale(1);   opacity: 0.8; }
+  10%           { transform: scale(1.8); opacity: 1; }
+  32%           { transform: scale(1.3); opacity: 0.9; }
+}
+
+@keyframes heart-led {
+  0%, 45%, 100% { opacity: 0.5; box-shadow: 0 0 3px var(--red); }
+  10%           { opacity: 1;   box-shadow: 0 0 8px var(--red), 0 0 18px var(--red); }
+  32%           { opacity: 0.9; box-shadow: 0 0 6px var(--red), 0 0 12px var(--red); }
+}
+
+@keyframes heart-ring-expand {
+  0%   { transform: scale(0.5); opacity: 0.6; border-width: 2px; }
+  60%  { opacity: 0.25; }
+  100% { transform: scale(2.2); opacity: 0; border-width: 0.5px; }
+}
+
+@keyframes aura-breathe {
+  0%, 45%, 100% { transform: scale(1);    opacity: 0.6; }
+  10%           { transform: scale(1.08); opacity: 1; }
+  32%           { transform: scale(1.04); opacity: 0.85; }
+}
+
+@keyframes breathe {
+  0%, 45%, 100% { filter: brightness(1); }
+  10%           { filter: brightness(1.05); }
+  32%           { filter: brightness(1.02); }
+}
+
+@keyframes title-glow-white {
+  0%, 45%, 100% { text-shadow: 0 0 20px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.08); }
+  10%           { text-shadow: 0 0 30px rgba(255,255,255,0.45), 0 0 80px rgba(255,255,255,0.2); }
+  32%           { text-shadow: 0 0 24px rgba(255,255,255,0.32), 0 0 60px rgba(255,255,255,0.12); }
+}
+
+@keyframes title-glow-red {
+  0%, 45%, 100% { text-shadow: 0 0 20px var(--redglow), 0 0 50px rgba(255,34,0,0.15); }
+  10%           { text-shadow: 0 0 30px var(--red), 0 0 90px rgba(255,34,0,0.5); }
+  32%           { text-shadow: 0 0 26px var(--red2), 0 0 70px rgba(255,34,0,0.3); }
 }
 
 @keyframes blink {
@@ -703,23 +728,28 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 
 @keyframes float-drift {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50%       { transform: translateY(-8px); opacity: 0.8; }
-}
-
-@keyframes ring-rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  0%, 100% { transform: translateY(0);    opacity: 0.35; }
+  50%       { transform: translateY(-10px); opacity: 0.7; }
 }
 
 @keyframes signal-pulse {
-  0%, 100% { opacity: 1; background: var(--red); }
-  50%       { opacity: 0.4; background: var(--red3); }
+  0%, 45%, 100% { opacity: 0.5; background: var(--red3); }
+  10%           { opacity: 1;   background: var(--red); }
+  32%           { opacity: 0.8; background: var(--red2); }
 }
 
 @keyframes card-appear {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ─────────────────────────────────────────
@@ -744,17 +774,20 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
     background: var(--white);
     transition: all 0.3s;
   }
-  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .steps { grid-template-columns: 1fr; gap: 1rem; }
+  .steps::before { display: none; }
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .services { padding: 4rem 2rem; }
-  .about, .contact { padding: 4rem 2rem; }
+  .how, .services, .contact { padding: 4rem 2rem; }
   .footer { padding: 2rem; }
-  .df1, .df2, .df3, .df4 { display: none; }
+  .df1, .df2, .df3, .df4, .df5, .df6 { font-size: 0.55rem; }
+  .df5, .df6 { display: none; }
 }
 
 @media (max-width: 600px) {
   .hero-inner { gap: 1.8rem; }
-  .logo-wrapper { width: 200px; height: 200px; }
-  .ring-3, .ring-4 { display: none; }
+  .heart-wrapper { width: 240px; height: 220px; }
+  .heart-svg { width: 170px; }
+  .heart-ring.r3 { display: none; }
   .services-grid { grid-template-columns: 1fr; }
+  .df3, .df4 { display: none; }
 }

@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pulse Tech Hub</title>
+  <title>Pulse Tech Hub — El latido que mueve tus envíos</title>
+  <meta name="description" content="Casillero en Miami y envíos puerta a puerta a Latinoamérica. Comprá donde quieras, nosotros lo traemos." />
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- ─── CANVAS: circuito animado de fondo ─── -->
-  <canvas id="circuit-canvas"></canvas>
+  <!-- Capa 0: polvo estelar + sinapsis -->
+  <canvas id="cosmos-canvas"></canvas>
 
-  <!-- ─── NAVEGACIÓN ─── -->
+  <!-- Capa 1: ondas que nacen del corazón -->
+  <canvas id="pulse-canvas"></canvas>
+
+  <!-- NAV -->
   <nav class="nav">
     <div class="nav-logo">
       <span class="nav-led"></span>
@@ -20,8 +24,8 @@
     </div>
     <ul class="nav-links">
       <li><a href="#hero">Inicio</a></li>
+      <li><a href="#how">Cómo funciona</a></li>
       <li><a href="#services">Servicios</a></li>
-      <li><a href="#about">Nosotros</a></li>
       <li><a href="#contact">Contacto</a></li>
     </ul>
     <button class="nav-toggle" aria-label="Menu">
@@ -29,43 +33,63 @@
     </button>
   </nav>
 
-  <!-- ─── HERO ─── -->
+  <!-- HERO: el corazón en el vacío -->
   <section id="hero" class="hero">
     <div class="hero-inner">
 
-      <!-- Logo central -->
-      <div class="logo-wrapper">
-        <div class="logo-ring ring-4"></div>
-        <div class="logo-ring ring-3"></div>
-        <div class="logo-ring ring-2"></div>
-        <div class="logo-ring ring-1"></div>
+      <!-- Corazón-nexo central -->
+      <div class="heart-wrapper">
+        <div class="heart-aura"></div>
+        <div class="heart-ring r1"></div>
+        <div class="heart-ring r2"></div>
+        <div class="heart-ring r3"></div>
 
-        <div class="logo-core">
-          <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <!-- Circuito interior -->
-            <circle cx="100" cy="100" r="72" fill="none" stroke="#ff2200" stroke-width="1" stroke-dasharray="4 6" opacity="0.4"/>
-            <!-- Cruz de circuito -->
-            <line x1="100" y1="28" x2="100" y2="60"  stroke="#ff4400" stroke-width="1.5" opacity="0.8"/>
-            <line x1="100" y1="140" x2="100" y2="172" stroke="#ff4400" stroke-width="1.5" opacity="0.8"/>
-            <line x1="28"  y1="100" x2="60"  y2="100" stroke="#ff4400" stroke-width="1.5" opacity="0.8"/>
-            <line x1="140" y1="100" x2="172" y2="100" stroke="#ff4400" stroke-width="1.5" opacity="0.8"/>
-            <!-- Nodos de circuito -->
-            <rect x="96" y="24" width="8" height="8" fill="#ff2200" opacity="0.9"/>
-            <rect x="96" y="168" width="8" height="8" fill="#ff2200" opacity="0.9"/>
-            <rect x="24" y="96" width="8" height="8" fill="#ff2200" opacity="0.9"/>
-            <rect x="168" y="96" width="8" height="8" fill="#ff2200" opacity="0.9"/>
-            <!-- Hex de fondo -->
-            <polygon points="100,44 148,72 148,128 100,156 52,128 52,72"
-              fill="none" stroke="#ff3300" stroke-width="1" opacity="0.3"/>
-            <!-- LED pulsante central -->
-            <circle cx="100" cy="100" r="12" fill="#ff2200" class="led-core"/>
-            <circle cx="100" cy="100" r="20" fill="none" stroke="#ff2200" stroke-width="2" class="led-ring"/>
-            <circle cx="100" cy="100" r="4"  fill="#ffffff" opacity="0.9"/>
-          </svg>
-        </div>
+        <svg class="heart-svg" viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="heart-fill" cx="50%" cy="45%" r="60%">
+              <stop offset="0%"  stop-color="#ff6633" stop-opacity="0.9"/>
+              <stop offset="55%" stop-color="#ff2200" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#660000" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="heart-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Silueta del corazón con relleno pulsante -->
+          <path class="heart-body"
+            d="M120,200 C60,160 20,120 20,75 C20,45 45,20 75,20 C95,20 110,32 120,48 C130,32 145,20 165,20 C195,20 220,45 220,75 C220,120 180,160 120,200 Z"
+            fill="url(#heart-fill)" filter="url(#heart-glow)"/>
+
+          <!-- Contorno de circuito -->
+          <path class="heart-outline"
+            d="M120,200 C60,160 20,120 20,75 C20,45 45,20 75,20 C95,20 110,32 120,48 C130,32 145,20 165,20 C195,20 220,45 220,75 C220,120 180,160 120,200 Z"
+            fill="none" stroke="#ff4400" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+          <!-- Arterias/circuito interno -->
+          <g class="heart-circuit" stroke="#ff6633" stroke-width="1" fill="none" opacity="0.7">
+            <path d="M75,60 L95,60 L95,90 L115,90"/>
+            <path d="M165,60 L145,60 L145,90 L125,90"/>
+            <path d="M120,95 L120,150"/>
+            <path d="M70,110 L100,110 L100,135 L115,135"/>
+            <path d="M170,110 L140,110 L140,135 L125,135"/>
+            <circle cx="95" cy="60" r="2" fill="#ff6633"/>
+            <circle cx="145" cy="60" r="2" fill="#ff6633"/>
+            <circle cx="100" cy="110" r="2" fill="#ff6633"/>
+            <circle cx="140" cy="110" r="2" fill="#ff6633"/>
+            <circle cx="120" cy="95" r="2.5" fill="#ff6633"/>
+          </g>
+
+          <!-- Núcleo LED -->
+          <circle class="heart-core" cx="120" cy="110" r="7" fill="#ffffff"/>
+        </svg>
       </div>
 
-      <!-- Texto del logo -->
+      <!-- Título -->
       <div class="hero-title-block">
         <h1 class="hero-title">
           <span class="title-pulse">PULSE</span><span class="title-tech">TECH</span>
@@ -76,33 +100,75 @@
         </div>
       </div>
 
-      <!-- Onda de pulso (EKG) -->
+      <!-- EKG sincronizado -->
       <div class="pulse-wave-container">
         <svg class="pulse-wave" viewBox="0 0 800 80" preserveAspectRatio="none">
           <polyline class="wave-line" points="
-            0,40 80,40 100,40 110,10 120,70 130,10 140,70 150,40 160,40
-            240,40 260,40 270,10 280,70 290,10 300,70 310,40 320,40
-            400,40 420,40 430,10 440,70 450,10 460,70 470,40 480,40
-            560,40 580,40 590,10 600,70 610,10 620,70 630,40 640,40
-            720,40 740,40 750,10 760,70 770,10 780,70 790,40 800,40
+            0,40 60,40 120,40 180,40 240,40
+            260,40 270,20 280,60 290,15 300,65 310,40 320,40
+            380,40 440,40 500,40 560,40
+            580,40 590,20 600,60 610,15 620,65 630,40 640,40
+            700,40 760,40 800,40
           "/>
         </svg>
       </div>
 
-      <a href="#services" class="hero-cta">
-        <span>Explorar</span>
+      <a href="#how" class="hero-cta">
+        <span>Sentí el pulso</span>
         <svg viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
       </a>
     </div>
 
-    <!-- Indicadores de datos flotantes -->
-    <div class="data-float df1">SYS: ONLINE</div>
-    <div class="data-float df2">NODE: ACTIVE</div>
-    <div class="data-float df3">NET: 99.9%</div>
-    <div class="data-float df4">PULSE: SYNC</div>
+    <!-- Datos flotantes: cada uno = un envío activo -->
+    <div class="data-float df1">MIA → EZE · EN TRÁNSITO</div>
+    <div class="data-float df2">PAQUETE #PTH-8842 · LISTO</div>
+    <div class="data-float df3">LATIDO · 72 BPM</div>
+    <div class="data-float df4">ENVÍOS ACTIVOS · 147</div>
+    <div class="data-float df5">CASILLERO · SYNC</div>
+    <div class="data-float df6">MIA → SCL · DESPACHADO</div>
   </section>
 
-  <!-- ─── SERVICIOS ─── -->
+  <!-- CÓMO FUNCIONA -->
+  <section id="how" class="how">
+    <div class="section-header">
+      <div class="section-line"></div>
+      <h2 class="section-title">CÓMO FUNCIONA</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <p class="how-lead">Tres latidos separan tu compra de tu puerta.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 64 64"><rect x="10" y="14" width="44" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 22 h32 M16 28 h22 M16 34 h26" stroke="currentColor" stroke-width="1.5"/><circle cx="48" cy="42" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Tu casillero en Miami</h3>
+        <p>Te damos una dirección propia en EE.UU. en minutos. Gratis, tuya, activa desde el minuto cero.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M32 10 v44 M10 32 h44" stroke="currentColor" stroke-width="1" opacity="0.5"/><path d="M18 22 Q32 14 46 22 M18 42 Q32 50 46 42" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="32" cy="32" r="3" fill="currentColor"/></svg>
+        </div>
+        <h3>Comprás donde quieras</h3>
+        <p>Amazon, eBay, Best Buy, Apple, tiendas oficiales. Usá tu dirección Pulse y seguí con lo tuyo.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 64 64"><path d="M8 28 L32 16 L56 28 L56 48 L32 58 L8 48 Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M32 16 V38 M8 28 L32 38 L56 28" stroke="currentColor" stroke-width="1.5"/><circle cx="32" cy="38" r="2" fill="currentColor"/></svg>
+        </div>
+        <h3>Lo recibís en tu puerta</h3>
+        <p>Consolidamos, despachamos y gestionamos aduana. Vos esperás tranquilo — nosotros latimos por vos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
   <section id="services" class="services">
     <div class="section-header">
       <div class="section-line"></div>
@@ -114,107 +180,63 @@
 
       <div class="service-card">
         <div class="card-icon">
-          <svg viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="16" y="20" width="14" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="34" y="20" width="14" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="38" x2="48" y2="38" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="44" x2="38" y2="44" stroke="currentColor" stroke-width="1.5"/><circle cx="50" cy="50" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="47" y1="50" x2="53" y2="50" stroke="currentColor" stroke-width="1.5"/><line x1="50" y1="47" x2="50" y2="53" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg viewBox="0 0 64 64"><rect x="8" y="18" width="48" height="34" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 28 h48" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="36" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="44" cy="41" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
-        <h3>Desarrollo Web</h3>
-        <p>Soluciones digitales a medida con arquitectura moderna, rendimiento máximo y diseño de vanguardia.</p>
+        <h3>Casillero en Miami</h3>
+        <p>Dirección personal en EE.UU. sin costo. Activación inmediata y almacenamiento gratuito los primeros 30 días.</p>
         <div class="card-led"></div>
       </div>
 
       <div class="service-card featured">
         <div class="card-icon">
-          <svg viewBox="0 0 64 64"><path d="M32 8 L54 20 L54 44 L32 56 L10 44 L10 20 Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="32" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="32" y1="8" x2="32" y2="24" stroke="currentColor" stroke-width="1.5"/><line x1="32" y1="40" x2="32" y2="56" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="20" x2="24" y2="28" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="36" x2="54" y2="44" stroke="currentColor" stroke-width="1.5"/><line x1="54" y1="20" x2="40" y2="28" stroke="currentColor" stroke-width="1.5"/><line x1="24" y1="36" x2="10" y2="44" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg viewBox="0 0 64 64"><path d="M6 40 Q20 28 32 40 T58 40" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="14" cy="38" r="3" fill="currentColor"/><circle cx="50" cy="42" r="3" fill="currentColor"/><path d="M14 38 L50 42" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><path d="M22 22 L32 14 L42 22" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
-        <h3>Infraestructura Cloud</h3>
-        <p>Arquitecturas escalables en la nube. Desde microservicios hasta soluciones enterprise de alta disponibilidad.</p>
+        <h3>Envíos puerta a puerta</h3>
+        <p>Llevamos tus paquetes desde Miami hasta tu domicilio en Argentina, Chile, Perú, Uruguay, Colombia y más.</p>
         <div class="card-led"></div>
         <div class="card-badge">CORE</div>
       </div>
 
       <div class="service-card">
         <div class="card-icon">
-          <svg viewBox="0 0 64 64"><rect x="12" y="12" width="40" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="20,32 28,24 36,36 44,28" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="32" r="2" fill="currentColor"/><circle cx="28" cy="24" r="2" fill="currentColor"/><circle cx="36" cy="36" r="2" fill="currentColor"/><circle cx="44" cy="28" r="2" fill="currentColor"/></svg>
+          <svg viewBox="0 0 64 64"><rect x="10" y="16" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="36" y="16" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="23" y="40" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19 34 L32 40 M45 34 L32 40" stroke="currentColor" stroke-width="1.2"/></svg>
         </div>
-        <h3>Analítica & AI</h3>
-        <p>Inteligencia artificial aplicada al negocio. Datos que generan decisiones, no solo reportes.</p>
+        <h3>Consolidación</h3>
+        <p>Juntamos varias compras en un solo envío. Menos flete, menos impuestos, más eficiencia en cada latido.</p>
         <div class="card-led"></div>
       </div>
 
       <div class="service-card">
         <div class="card-icon">
-          <svg viewBox="0 0 64 64"><rect x="20" y="8" width="24" height="32" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="32" y1="40" x2="32" y2="52" stroke="currentColor" stroke-width="2"/><line x1="20" y1="52" x2="44" y2="52" stroke="currentColor" stroke-width="2"/><line x1="26" y1="16" x2="38" y2="16" stroke="currentColor" stroke-width="1.5"/><line x1="26" y1="22" x2="38" y2="22" stroke="currentColor" stroke-width="1.5"/><line x1="26" y1="28" x2="34" y2="28" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M32 10 v44" stroke="currentColor" stroke-width="1.2"/><path d="M10 32 h44" stroke="currentColor" stroke-width="1.2"/><path d="M18 20 L46 44 M46 20 L18 44" stroke="currentColor" stroke-width="0.8" opacity="0.5"/><circle cx="32" cy="32" r="4" fill="currentColor"/></svg>
         </div>
-        <h3>Apps Mobile</h3>
-        <p>Experiencias nativas e híbridas para iOS y Android. Velocidad, fluidez y diseño que el usuario siente.</p>
+        <h3>Compras asistidas</h3>
+        <p>¿El sitio no acepta tu tarjeta? Nosotros compramos por vos con total transparencia y sin costos ocultos.</p>
         <div class="card-led"></div>
       </div>
 
       <div class="service-card">
         <div class="card-icon">
-          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="2"/><path d="M32 10 Q42 20 42 32 Q42 44 32 54 Q22 44 22 32 Q22 20 32 10" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="32" x2="54" y2="32" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg viewBox="0 0 64 64"><path d="M8 48 L32 12 L56 48 Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M18 48 L18 36 L46 36 L46 48" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="28" y="40" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
         </div>
-        <h3>Ciberseguridad</h3>
-        <p>Protección integral de activos digitales. Auditorías, hardening y respuesta a incidentes 24/7.</p>
+        <h3>Aduana y nacionalización</h3>
+        <p>Gestionamos la documentación, el despacho y los impuestos. Tu paquete entra legal, rápido y sin sorpresas.</p>
         <div class="card-led"></div>
       </div>
 
       <div class="service-card">
         <div class="card-icon">
-          <svg viewBox="0 0 64 64"><rect x="8" y="28" width="12" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="26" y="18" width="12" height="38" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="44" y="8" width="12" height="48" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M32 14 v18 L44 38" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="32" cy="32" r="2.5" fill="currentColor"/></svg>
         </div>
-        <h3>Consultoría IT</h3>
-        <p>Estrategia tecnológica alineada al negocio. Transformación digital con hoja de ruta clara y medible.</p>
+        <h3>Tracking en vivo</h3>
+        <p>Seguí cada latido de tu envío en tiempo real. Notificaciones desde el warehouse hasta tu puerta.</p>
         <div class="card-led"></div>
       </div>
 
     </div>
   </section>
 
-  <!-- ─── ABOUT ─── -->
-  <section id="about" class="about">
-    <div class="about-grid">
-      <div class="about-visual">
-        <div class="about-orb">
-          <div class="orb-ring r1"></div>
-          <div class="orb-ring r2"></div>
-          <div class="orb-ring r3"></div>
-          <div class="orb-center">
-            <svg viewBox="0 0 100 100" class="orb-svg">
-              <line x1="50" y1="10" x2="50" y2="90" stroke="#ff2200" stroke-width="1" opacity="0.5"/>
-              <line x1="10" y1="50" x2="90" y2="50" stroke="#ff2200" stroke-width="1" opacity="0.5"/>
-              <line x1="22" y1="22" x2="78" y2="78" stroke="#ff2200" stroke-width="1" opacity="0.3"/>
-              <line x1="78" y1="22" x2="22" y2="78" stroke="#ff2200" stroke-width="1" opacity="0.3"/>
-              <circle cx="50" cy="50" r="20" fill="none" stroke="#ff2200" stroke-width="1.5" stroke-dasharray="3 4"/>
-              <circle cx="50" cy="50" r="6" fill="#ff2200"/>
-              <circle cx="50" cy="50" r="2" fill="#fff"/>
-            </svg>
-          </div>
-        </div>
-        <div class="about-stats">
-          <div class="stat"><span class="stat-num" data-target="120">0</span><span class="stat-label">Proyectos</span></div>
-          <div class="stat"><span class="stat-num" data-target="8">0</span><span class="stat-label">Años</span></div>
-          <div class="stat"><span class="stat-num" data-target="40">0</span><span class="stat-label">Clientes</span></div>
-          <div class="stat"><span class="stat-num" data-target="99">0</span><span class="stat-label">% Uptime</span></div>
-        </div>
-      </div>
-
-      <div class="about-content">
-        <div class="section-header left">
-          <div class="section-line short"></div>
-          <h2 class="section-title">NOSOTROS</h2>
-        </div>
-        <p class="about-lead">Somos el pulso de la tecnología empresarial.</p>
-        <p class="about-body">En Pulse Tech Hub diseñamos, construimos y operamos la infraestructura digital que mueve a las empresas del mañana. Combinamos experiencia técnica de alto nivel con una visión estratégica clara para entregar soluciones que no solo funcionan — <strong>perduran</strong>.</p>
-        <p class="about-body">Como el latido constante que mantiene un sistema vivo, estamos siempre activos, siempre conectados, siempre avanzando.</p>
-        <div class="tech-tags">
-          <span>React</span><span>Node.js</span><span>AWS</span><span>Kubernetes</span>
-          <span>Python</span><span>TensorFlow</span><span>PostgreSQL</span><span>Terraform</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── CONTACT ─── -->
+  <!-- CONTACTO -->
   <section id="contact" class="contact">
     <div class="section-header">
       <div class="section-line"></div>
@@ -224,17 +246,18 @@
 
     <div class="contact-grid">
       <div class="contact-info">
+        <p class="contact-lead">Escribinos y abrimos tu casillero hoy mismo.</p>
         <div class="contact-item">
           <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M3 8v10a1 1 0 001 1h16a1 1 0 001-1V8M3 8a1 1 0 011-1h16a1 1 0 011 1"/></svg>
-          <span>contacto@pulsetechhub.com</span>
+          <span>hola@pulsetechhub.com</span>
         </div>
         <div class="contact-item">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          <span>+54 11 0000-0000</span>
+          <span>+1 (305) 000-0000</span>
         </div>
         <div class="contact-item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Buenos Aires, Argentina</span>
+          <span>Miami, FL · Buenos Aires, AR</span>
         </div>
       </div>
 
@@ -251,25 +274,25 @@
         </div>
         <div class="form-group">
           <textarea id="message" rows="4" placeholder=" " required></textarea>
-          <label for="message">Mensaje</label>
+          <label for="message">Contanos qué necesitás</label>
           <div class="form-line"></div>
         </div>
         <button type="submit" class="form-submit">
           <span class="btn-led"></span>
-          ENVIAR SEÑAL
+          <span>ENVIAR SEÑAL</span>
         </button>
       </form>
     </div>
   </section>
 
-  <!-- ─── FOOTER ─── -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="nav-led small"></span>
         <span>PULSE<span class="accent">TECH</span> HUB</span>
       </div>
-      <p class="footer-copy">© 2026 Pulse Tech Hub. Todos los derechos reservados.</p>
+      <p class="footer-copy">© 2026 Pulse Tech Hub · El latido que mueve tus envíos.</p>
       <div class="footer-signal">
         <span class="signal-bar s1"></span>
         <span class="signal-bar s2"></span>
