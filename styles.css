@@ -130,20 +130,29 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.1rem;
   text-align: center;
   position: relative;
   z-index: 2;
-  padding: 4.5rem 2rem 2.5rem;
+  padding: 4rem 2rem 2.5rem;
 }
 
-/* ── Corazón anatómico ── */
+/* Heart + title locked together as a single header unit */
+.hero-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── Anatomical heart ── */
 .heart-wrapper {
   position: relative;
-  width: 260px; height: 280px;
+  width: 200px; height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: -0.2rem;    /* hug the title below */
 }
 .heart-aura {
   position: absolute;
@@ -158,11 +167,11 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   border-radius: 50%;
   border: 1px solid var(--red);
   pointer-events: none;
-  width: 220px; height: 220px;
+  width: 180px; height: 180px;
   animation: heart-ring-expand 1400ms ease-out 1 forwards;
   opacity: 0;
 }
-/* r1: leve durante la inhalación · r2: TUC 1 · r3: TUC 2 */
+/* r1: soft ring during inhale · r2: TUC 1 · r3: TUC 2 */
 .heart-ring.r1 { animation-delay: 1100ms; }
 .heart-ring.r2 { animation-delay: 1680ms; }
 .heart-ring.r3 { animation-delay: 2160ms; }
@@ -170,12 +179,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .heart-img {
   position: relative;
   z-index: 2;
-  width: 240px;
+  width: 190px;
   height: auto;
   display: block;
   transform-origin: 50% 60%;
-  /* Latido + subtle pulse del brillo interior durante el ciclo de intro */
-  animation: heart-beat   var(--intro) cubic-bezier(.45,.05,.55,.95) 1 forwards,
+  /* Beat + internal glow sweep during intro cycle */
+  animation: heart-beat     var(--intro) cubic-bezier(.45,.05,.55,.95) 1 forwards,
              heart-img-glow var(--intro) ease-in-out 1 forwards;
   filter: drop-shadow(0 0 14px rgba(255,34,0,0.55))
           drop-shadow(0 0 30px rgba(255,34,0,0.2));
@@ -183,11 +192,14 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   -webkit-user-drag: none;
 }
 
-/* ── Título ── */
-.hero-title-block { line-height: 1; }
+/* ── Title ── */
+.hero-title-block {
+  line-height: 1;
+  margin-top: 0;
+}
 .hero-title {
   font-family: var(--orb);
-  font-size: clamp(3rem, 10vw, 7rem);
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
   font-weight: 900;
   letter-spacing: 0.1em;
   line-height: 1;
@@ -202,17 +214,17 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 .title-hub {
   font-family: var(--mono);
-  font-size: clamp(0.9rem, 3vw, 1.4rem);
+  font-size: clamp(0.85rem, 2.5vw, 1.2rem);
   letter-spacing: 0.6em;
   color: var(--gray);
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 }
 .hero-tagline {
   font-family: var(--mono);
   font-size: clamp(0.75rem, 2vw, 0.95rem);
   color: var(--red);
   letter-spacing: 0.08em;
-  margin-top: 1.2rem;
+  margin-top: 0;
   min-height: 1.4em;
 }
 .cursor {
@@ -802,10 +814,10 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 
 @media (max-width: 600px) {
-  .hero-inner { gap: 1.8rem; }
-  .heart-wrapper { width: 220px; height: 220px; }
-  .heart-img { width: 190px; }
-  .heart-ring { width: 190px; height: 190px; }
+  .hero-inner { gap: 0.9rem; }
+  .heart-wrapper { width: 170px; height: 170px; }
+  .heart-img { width: 160px; }
+  .heart-ring { width: 155px; height: 155px; }
   .heart-ring.r3 { display: none; }
   .services-grid { grid-template-columns: 1fr; }
   .df3, .df4 { display: none; }

@@ -300,10 +300,10 @@ function runLoop(step) {
   const el = document.getElementById('typed');
   if (!el) return;
   const lines = [
-    'El latido que mueve tus envíos.',
-    'Tu casillero en Miami, tu mundo en LATAM.',
-    'Comprá. Nosotros lo traemos.',
-    'Cada beat es un paquete en camino.',
+    'The pulse that moves your shipments.',
+    'Your Miami mailbox, your Latin American world.',
+    'You buy. We deliver.',
+    'Every beat is a package in motion.',
   ];
   let li = 0, ci = 0, deleting = false;
 
@@ -374,7 +374,7 @@ function runLoop(step) {
     e.preventDefault();
     const btn = form.querySelector('.form-submit');
     const original = btn.innerHTML;
-    btn.innerHTML = '<span class="btn-led"></span><span>SEÑAL ENVIADA</span>';
+    btn.innerHTML = '<span class="btn-led"></span><span>SIGNAL SENT</span>';
     btn.style.borderColor = '#00ff88';
     btn.style.color       = '#00ff88';
     setTimeout(() => {
