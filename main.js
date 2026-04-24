@@ -4,11 +4,10 @@
 //  Synapses: ambient destellos (random sparks)
 // ─────────────────────────────────────────
 
-const BEAT_MS        = 833;          // 72 bpm
-const INTRO_BEATS    = 3;
-const INTRO_DURATION = BEAT_MS * INTRO_BEATS;
-const LUB_AT         = 0.10 * BEAT_MS;
-const DUB_AT         = 0.32 * BEAT_MS;
+const INTRO_DURATION = 2400;  // single intro cycle · inhale + tuc-tuc
+const INHALE_AT      = 1200;  // slow inhale peak
+const TUC1_AT        = 1720;  // first tuc
+const TUC2_AT        = 2160;  // second tuc
 
 let introStart = performance.now();
 
@@ -244,12 +243,11 @@ function runLoop(step) {
     cy = H * 0.42;
   }
 
-  // Seed the intro rings (one lub + one dub per beat, 3 beats)
+  // Seed the intro rings: soft inhale ring + two tuc rings
   function seedRings() {
-    for (let i = 0; i < INTRO_BEATS; i++) {
-      rings.push({ born: introStart + i * BEAT_MS + LUB_AT, type: 'lub' });
-      rings.push({ born: introStart + i * BEAT_MS + DUB_AT, type: 'dub' });
-    }
+    rings.push({ born: introStart + INHALE_AT, type: 'inhale' });
+    rings.push({ born: introStart + TUC1_AT,   type: 'tuc1'   });
+    rings.push({ born: introStart + TUC2_AT,   type: 'tuc2'   });
   }
 
   let seeded = false;
@@ -267,20 +265,25 @@ function runLoop(step) {
       const r = rings[i];
       const age = t - r.born;
       if (age < 0) { activeCount++; continue; }
-      const life = age / (BEAT_MS * 2.5);
+      // tuc rings are fast and bright; inhale ring is slow and soft
+      const life = age / (r.type === 'inhale' ? 2200 : 1800);
       if (life > 1) { rings.splice(i, 1); continue; }
       activeCount++;
       const radius = 60 + life * maxR;
-      const alpha = (1 - life) * (r.type === 'lub' ? 0.35 : 0.18);
-      ctx.strokeStyle = `rgba(255,${r.type === 'lub' ? 34 : 100},0,${alpha})`;
-      ctx.lineWidth = r.type === 'lub' ? 1.2 : 0.7;
+      const baseAlpha = r.type === 'tuc1' ? 0.4
+                      : r.type === 'tuc2' ? 0.28
+                      :                     0.14;  // inhale
+      const alpha = (1 - life) * baseAlpha;
+      const hue = r.type === 'inhale' ? 120 : r.type === 'tuc1' ? 34 : 70;
+      ctx.strokeStyle = `rgba(255,${hue},0,${alpha})`;
+      ctx.lineWidth = r.type === 'tuc1' ? 1.4 : r.type === 'tuc2' ? 1 : 0.6;
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.stroke();
     }
 
     // Once all intro rings have faded, stop drawing entirely
-    if (seeded && activeCount === 0 && t > introStart + INTRO_DURATION + BEAT_MS * 3) {
+    if (seeded && activeCount === 0 && t > introStart + INTRO_DURATION + 2500) {
       ctx.clearRect(0, 0, W, H);
       canvas.style.display = 'none';
       finished = true;
