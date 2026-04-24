@@ -186,6 +186,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   /* Beat + internal glow sweep during intro cycle */
   animation: heart-beat     var(--intro) cubic-bezier(.45,.05,.55,.95) 1 forwards,
              heart-img-glow var(--intro) ease-in-out 1 forwards;
+  /* Black background of the PNG becomes invisible: bright pixels stay,
+     0,0,0 blends away against anything behind it */
+  mix-blend-mode: screen;
   filter: drop-shadow(0 0 14px rgba(255,34,0,0.55))
           drop-shadow(0 0 30px rgba(255,34,0,0.2));
   user-select: none;
