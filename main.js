@@ -300,10 +300,10 @@ function runLoop(step) {
   const el = document.getElementById('typed');
   if (!el) return;
   const lines = [
-    'The pulse that moves your shipments.',
-    'Your Miami mailbox, your Latin American world.',
-    'You buy. We deliver.',
-    'Every beat is a package in motion.',
+    'Enterprise hardware from Miami to the world.',
+    'Laptops, printers, networking — shipped globally.',
+    'Source. Quote. Export. Deliver.',
+    'The pulse that powers global tech trade.',
   ];
   let li = 0, ci = 0, deleting = false;
 
