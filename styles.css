@@ -130,11 +130,11 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.1rem;
+  gap: 0.8rem;
   text-align: center;
   position: relative;
   z-index: 2;
-  padding: 4rem 2rem 2.5rem;
+  padding: 3.5rem 2rem 2rem;
 }
 
 /* Heart + title locked together as a single header unit */
@@ -239,7 +239,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 /* ── EKG ── */
 .pulse-wave-container {
   width: min(600px, 90vw);
-  height: 60px;
+  height: 36px;
   overflow: hidden;
 }
 .pulse-wave { width: 100%; height: 100%; }
