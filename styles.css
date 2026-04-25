@@ -241,7 +241,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   width: 100%;
   /* Match the trimmed robot.png ratio exactly so the figure fills the
      visual frame edge-to-edge with zero letterboxing. */
-  aspect-ratio: 429 / 541;
+  aspect-ratio: 429 / 501;
   max-width: 480px;
   justify-self: end;
 }
@@ -265,10 +265,10 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   filter:
     drop-shadow(0 0 14px rgba(198,204,212,0.22))
     drop-shadow(0 0 38px rgba(157,165,177,0.14));
-  /* Soft fade at the bottom so the chest cut bleeds into navy
-     instead of showing as a hard horizontal edge. */
-  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  /* Soft fade at BOTH ends: the top of the cranium and the chest cut
+     blend smoothly into navy instead of showing a hard edge. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 78%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 78%, transparent 100%);
   /* Slow breathing — barely perceptible scale */
   animation: visual-breathe 6s ease-in-out infinite;
   user-select: none;
