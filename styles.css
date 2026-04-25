@@ -244,6 +244,10 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   aspect-ratio: 429 / 501;
   max-width: 480px;
   justify-self: end;
+  /* Anchor to the top of the grid row instead of centering, so the
+     robot reads higher in the hero — eye level closer to the kicker. */
+  align-self: start;
+  margin-top: -1rem;
 }
 /* Subtle silver radial behind the figure */
 .hero-visual-glow {
