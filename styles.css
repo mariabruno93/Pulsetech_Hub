@@ -239,8 +239,10 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 .hero-visual {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1.05;
-  max-width: 520px;
+  /* Match the trimmed robot.png ratio exactly so the figure fills the
+     visual frame edge-to-edge with zero letterboxing. */
+  aspect-ratio: 429 / 541;
+  max-width: 480px;
   justify-self: end;
 }
 /* Subtle silver radial behind the figure */
@@ -667,7 +669,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 
   .hero { padding: 7rem 1.8rem 4rem; }
   .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .hero-visual { justify-self: center; max-width: 380px; aspect-ratio: 1 / 1; }
+  .hero-visual { justify-self: center; max-width: 320px; }
   .manifesto, .partners, .access { padding: 5rem 1.8rem; }
   .capabilities { padding: 5rem 0; }
   .capability-grid { grid-template-columns: 1fr; padding: 0 1.8rem; }
