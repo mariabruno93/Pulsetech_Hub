@@ -1,7 +1,115 @@
 // ─────────────────────────────────────────
 //  PULSE TECH HUB — Corporate
-//  Minimal interactivity: nav scroll, reveal on scroll, access form.
+//  Minimal interactivity: hero ambient particles, nav scroll,
+//  reveal on scroll, access form.
 // ─────────────────────────────────────────
+
+/* Hero ambient particles — silver / cool tones, very low density,
+   slow drift. Pauses when the hero scrolls out of view or the tab
+   is hidden, so it never burns CPU. */
+(function initHeroParticles() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, particles = [], visible = true, running = true;
+  const isMobile = () => window.innerWidth < 768;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+  }
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  function seed() {
+    const count = isMobile() ? 28 : 60;
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.5, 1.4),
+        vx: rand(-0.06, 0.06),
+        vy: rand(-0.04, 0.04),
+        phase: rand(0, Math.PI * 2),
+        speed: rand(0.0008, 0.002),
+        // Cool-tone: silver/pale-blue tint, subtle variance
+        tint: rand(0, 1) < 0.7 ? 'silver' : 'blue',
+      });
+    }
+  }
+
+  function step() {
+    if (!running || !visible) return;
+    ctx.clearRect(0, 0, W, H);
+
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.phase += p.speed * 16;
+
+      if (p.x < -5)  p.x = W + 5;
+      if (p.x > W + 5) p.x = -5;
+      if (p.y < -5)  p.y = H + 5;
+      if (p.y > H + 5) p.y = -5;
+
+      const a = 0.18 + 0.32 * Math.abs(Math.sin(p.phase));
+      const color = p.tint === 'silver'
+        ? `rgba(198,204,212,${a})`
+        : `rgba(170,190,215,${a * 0.85})`;
+
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Occasional subtle highlight bloom on the brightest particles
+      if (p.r > 1.1 && a > 0.42) {
+        ctx.fillStyle = `rgba(198,204,212,${(a - 0.4) * 0.2})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    requestAnimationFrame(step);
+  }
+  function stop() { running = false; }
+
+  // Pause when the hero scrolls out of view
+  const hero = canvas.closest('.hero');
+  if (hero && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { visible = e.isIntersecting; });
+      if (visible) requestAnimationFrame(step);
+    }, { threshold: 0 });
+    io.observe(hero);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else { start(); }
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(step);
+})();
 
 /* Nav scroll state */
 (function initNav() {

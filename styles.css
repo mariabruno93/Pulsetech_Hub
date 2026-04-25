@@ -214,13 +214,116 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(198,204,212,0.035) 0%, transparent 60%);
   pointer-events: none;
 }
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.85;
+}
 .hero-inner {
   position: relative;
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 4.5rem;
+  align-items: center;
 }
+.hero-text { min-width: 0; }
+
+/* ── Hero visual (robot image) ── */
+.hero-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  max-width: 520px;
+  justify-self: end;
+}
+/* Subtle silver radial behind the figure */
+.hero-visual-glow {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(198,204,212,0.16) 0%, rgba(157,165,177,0.06) 38%, transparent 72%);
+  filter: blur(28px);
+  z-index: 1;
+  animation: visual-glow-breathe 7s ease-in-out infinite;
+}
+.hero-img {
+  position: relative;
+  z-index: 2;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+  /* Black-background PNG: screen blends pure black into the navy */
+  mix-blend-mode: screen;
+  /* Soft mask hides watermark / hard image edges */
+  -webkit-mask-image: radial-gradient(ellipse 56% 60% at 50% 50%, #000 78%, transparent 100%);
+          mask-image: radial-gradient(ellipse 56% 60% at 50% 50%, #000 78%, transparent 100%);
+  /* Slow breathing — barely perceptible scale */
+  animation: visual-breathe 6s ease-in-out infinite;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+/* Slow horizontal scan highlight crossing the image every ~9s */
+.hero-visual-scan {
+  position: absolute;
+  inset: 12% 6%;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-visual-scan span {
+  position: absolute;
+  left: -30%; top: 0; bottom: 0;
+  width: 30%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(198,204,212,0) 30%,
+    rgba(198,204,212,0.18) 50%,
+    rgba(198,204,212,0) 70%,
+    transparent 100%
+  );
+  filter: blur(1px);
+  animation: visual-scan 9s linear infinite;
+}
+/* Architectural corner brackets — adds "instrumented" tech feel */
+.hero-visual-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+.hero-visual-frame span {
+  position: absolute;
+  width: 22px; height: 22px;
+  border: 1px solid var(--silver-dim);
+  opacity: 0.4;
+  transition: opacity 600ms var(--ease);
+}
+.frame-tl { top: 0;     left: 0;     border-right: 0; border-bottom: 0; }
+.frame-tr { top: 0;     right: 0;    border-left: 0;  border-bottom: 0; }
+.frame-bl { bottom: 0;  left: 0;     border-right: 0; border-top: 0;    }
+.frame-br { bottom: 0;  right: 0;    border-left: 0;  border-top: 0;    }
+
+@keyframes visual-breathe {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.018); }
+}
+@keyframes visual-glow-breathe {
+  0%, 100% { opacity: 0.85; transform: scale(1);    }
+  50%      { opacity: 1;    transform: scale(1.06); }
+}
+@keyframes visual-scan {
+  0%   { transform: translateX(0); }
+  60%, 100% { transform: translateX(450%); }
+}
+
 .kicker {
   display: inline-block;
   font-family: var(--mono);
@@ -561,7 +664,9 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
     transition: all 300ms var(--ease);
   }
 
-  .hero { padding: 8rem 1.8rem 5rem; }
+  .hero { padding: 7rem 1.8rem 4rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-visual { justify-self: center; max-width: 380px; aspect-ratio: 1 / 1; }
   .manifesto, .partners, .access { padding: 5rem 1.8rem; }
   .capabilities { padding: 5rem 0; }
   .capability-grid { grid-template-columns: 1fr; padding: 0 1.8rem; }

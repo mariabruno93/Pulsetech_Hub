@@ -32,19 +32,37 @@
 
   <!-- HERO -->
   <section id="top" class="hero">
+    <!-- Cool-toned ambient particles, behind everything -->
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
     <div class="hero-inner">
-      <span class="kicker">MIAMI · GLOBAL HARDWARE PROCUREMENT</span>
-      <h1 class="hero-title">
-        The hardware behind the world's<br />
-        enterprise operations.
-      </h1>
-      <p class="hero-sub">
-        Priority procurement, logistics, and advisory for qualified partners.<br />
-        Inventory and pricing available by request.
-      </p>
-      <div class="hero-ctas">
-        <a href="#access" class="btn btn-primary">Request Access</a>
-        <a href="#capabilities" class="btn btn-ghost">Capabilities</a>
+      <div class="hero-text">
+        <span class="kicker">MIAMI · GLOBAL HARDWARE PROCUREMENT</span>
+        <h1 class="hero-title">
+          The hardware behind the world's<br />
+          enterprise operations.
+        </h1>
+        <p class="hero-sub">
+          Priority procurement, logistics, and advisory for qualified partners.<br />
+          Inventory and pricing available by request.
+        </p>
+        <div class="hero-ctas">
+          <a href="#access" class="btn btn-primary">Request Access</a>
+          <a href="#capabilities" class="btn btn-ghost">Capabilities</a>
+        </div>
+      </div>
+
+      <!-- Visual column: robot image with subtle breathing + scan highlight -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-visual-glow"></div>
+        <img class="hero-img" src="robot.png" alt="" />
+        <div class="hero-visual-scan"><span></span></div>
+        <div class="hero-visual-frame">
+          <span class="frame-tl"></span>
+          <span class="frame-tr"></span>
+          <span class="frame-bl"></span>
+          <span class="frame-br"></span>
+        </div>
       </div>
     </div>
 
