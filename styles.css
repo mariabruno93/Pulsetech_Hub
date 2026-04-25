@@ -259,11 +259,12 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   width: 100%; height: 100%;
   object-fit: contain;
   display: block;
-  /* Black-background PNG: screen blends pure black into the navy */
-  mix-blend-mode: screen;
-  /* Soft mask hides watermark / hard image edges */
-  -webkit-mask-image: radial-gradient(ellipse 56% 60% at 50% 50%, #000 78%, transparent 100%);
-          mask-image: radial-gradient(ellipse 56% 60% at 50% 50%, #000 78%, transparent 100%);
+  /* Transparent PNG: render alpha-correct, no blend or mask needed.
+     Two stacked silver drop-shadows follow the robot silhouette so it
+     reads as suspended in space with a soft cool halo around its body. */
+  filter:
+    drop-shadow(0 0 14px rgba(198,204,212,0.22))
+    drop-shadow(0 0 38px rgba(157,165,177,0.14));
   /* Slow breathing — barely perceptible scale */
   animation: visual-breathe 6s ease-in-out infinite;
   user-select: none;
