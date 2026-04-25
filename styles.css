@@ -261,12 +261,14 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   width: 100%; height: 100%;
   object-fit: contain;
   display: block;
-  /* Transparent PNG: render alpha-correct, no blend or mask needed.
-     Two stacked silver drop-shadows follow the robot silhouette so it
-     reads as suspended in space with a soft cool halo around its body. */
+  /* Transparent PNG: silver drop-shadows follow the silhouette. */
   filter:
     drop-shadow(0 0 14px rgba(198,204,212,0.22))
     drop-shadow(0 0 38px rgba(157,165,177,0.14));
+  /* Soft fade at the bottom so the chest cut bleeds into navy
+     instead of showing as a hard horizontal edge. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
   /* Slow breathing — barely perceptible scale */
   animation: visual-breathe 6s ease-in-out infinite;
   user-select: none;
@@ -295,25 +297,6 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   filter: blur(1px);
   animation: visual-scan 9s linear infinite;
 }
-/* Architectural corner brackets — adds "instrumented" tech feel */
-.hero-visual-frame {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-}
-.hero-visual-frame span {
-  position: absolute;
-  width: 22px; height: 22px;
-  border: 1px solid var(--silver-dim);
-  opacity: 0.4;
-  transition: opacity 600ms var(--ease);
-}
-.frame-tl { top: 0;     left: 0;     border-right: 0; border-bottom: 0; }
-.frame-tr { top: 0;     right: 0;    border-left: 0;  border-bottom: 0; }
-.frame-bl { bottom: 0;  left: 0;     border-right: 0; border-top: 0;    }
-.frame-br { bottom: 0;  right: 0;    border-left: 0;  border-top: 0;    }
-
 @keyframes visual-breathe {
   0%, 100% { transform: scale(1);    }
   50%      { transform: scale(1.018); }
@@ -667,9 +650,17 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
     transition: all 300ms var(--ease);
   }
 
-  .hero { padding: 7rem 1.8rem 4rem; }
-  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .hero-visual { justify-self: center; max-width: 320px; }
+  /* Drop the hero's horizontal padding so the robot can span the
+     full viewport edge to edge; restore the side gutter on the text
+     block alone. */
+  .hero { padding: 7rem 0 4rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 0; }
+  .hero-text { padding: 0 1.8rem; }
+  .hero-visual {
+    justify-self: stretch;
+    max-width: 100%;
+    width: 100%;
+  }
   .manifesto, .partners, .access { padding: 5rem 1.8rem; }
   .capabilities { padding: 5rem 0; }
   .capability-grid { grid-template-columns: 1fr; padding: 0 1.8rem; }
