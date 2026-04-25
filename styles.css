@@ -202,7 +202,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 9rem 3rem 6rem;
+  padding: 5.5rem 3rem 4rem;
   border-bottom: 1px solid var(--border-soft);
   overflow: hidden;
 }
@@ -657,7 +657,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   /* Drop the hero's horizontal padding so the robot can span the
      full viewport edge to edge; restore the side gutter on the text
      block alone. */
-  .hero { padding: 7rem 0 4rem; }
+  .hero { padding: 5rem 0 3rem; }
   .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 0; }
   .hero-text { padding: 0 1.8rem; }
   .hero-visual {
