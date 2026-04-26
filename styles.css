@@ -179,6 +179,34 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 }
 .nav-links a:hover { color: var(--ice); }
 .nav-links a:hover::after { transform: scaleX(1); }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+.nav-login {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--gray);
+  transition: color 200ms var(--ease);
+  position: relative;
+}
+.nav-login::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 0; right: 0;
+  height: 1px;
+  background: var(--silver);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms var(--ease);
+}
+.nav-login:hover { color: var(--ice); }
+.nav-login:hover::after { transform: scaleX(1); }
+.nav-login.is-active { color: var(--ice); }
+.nav-login.is-active::after { transform: scaleX(1); background: var(--silver-dim); }
 .nav-cta {
   font-family: var(--sans);
   font-size: 0.78rem;
@@ -582,17 +610,23 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 /* ── Footer ── */
 .footer {
   background: var(--navy-deep);
-  padding: 3rem 3rem 2.4rem;
+  padding: 4.5rem 3rem 2rem;
   position: relative;
 }
 .footer-inner {
   max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr;
+  gap: 3rem;
+  align-items: start;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+.footer-brand-col {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1.2rem;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 .footer-brand {
   display: flex;
@@ -604,16 +638,59 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   letter-spacing: 0.28em;
   color: var(--ice);
 }
-.footer-meta {
+.footer-tagline {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.92rem;
+  color: var(--gray);
+  max-width: 28ch;
+  line-height: 1.5;
+}
+.footer-contact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+}
+.footer-contact-item {
   display: flex;
-  gap: 2rem;
+  align-items: flex-start;
+  gap: 0.85rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.92rem;
+  color: var(--gray);
+  line-height: 1.5;
+}
+.footer-contact-item svg {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  color: var(--silver-dim);
+  margin-top: 2px;
+}
+.footer-contact-item a { transition: color 200ms var(--ease); }
+.footer-contact-item a:hover { color: var(--ice); }
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 1.6rem auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--mono);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
   color: var(--gray);
 }
-.footer-meta a { transition: color 200ms var(--ease); }
-.footer-meta a:hover { color: var(--ice); }
+.footer-bottom-links a { transition: color 200ms var(--ease); }
+.footer-bottom-links a:hover { color: var(--ice); }
+.footer-dot { color: var(--gray-muted); }
 .footer-copy {
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -648,6 +725,115 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   transform: translateY(0);
 }
 
+/* ─────────────────────────────────────────
+   LOGIN PAGE
+   ───────────────────────────────────────── */
+.login-body {
+  background: var(--navy);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.login {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 1.8rem 5rem;
+  position: relative;
+}
+.login::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 40% at 50% 30%, rgba(198,204,212,0.04) 0%, transparent 65%);
+  pointer-events: none;
+}
+.login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 460px;
+  background: var(--navy-card);
+  border: 1px solid var(--border-soft);
+  padding: 3rem 2.6rem;
+}
+.login-card .kicker { margin-bottom: 1.4rem; }
+.login-title {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ice);
+}
+.login-sub {
+  margin-top: 0.9rem;
+  font-size: 0.92rem;
+  color: var(--gray);
+  line-height: 1.55;
+}
+.login-form {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.login-form .btn { align-self: stretch; justify-content: center; margin-top: 0.4rem; }
+.login-help {
+  margin-top: 1.6rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--gray-dim);
+  text-align: center;
+}
+.login-help a {
+  color: var(--silver);
+  transition: color 200ms var(--ease);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+}
+.login-help a:hover { color: var(--ice); border-bottom-color: var(--silver); }
+
+/* Always-deny response panel */
+.login-message {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.4rem;
+  animation: login-message-in 400ms var(--ease) both;
+}
+@keyframes login-message-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.login-message-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: var(--silver-dim);
+}
+.login-message-title {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ice);
+}
+.login-message-body {
+  font-size: 0.92rem;
+  color: var(--gray);
+  line-height: 1.6;
+}
+.login-message .btn {
+  align-self: stretch;
+  justify-content: center;
+  margin-top: 0.6rem;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -663,7 +849,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 
 @media (max-width: 900px) {
   .nav { padding: 1.2rem 1.8rem; }
-  .nav-links, .nav-cta { display: none; }
+  .nav-links, .nav-actions { display: none; }
   .nav-toggle {
     display: flex;
     flex-direction: column;
@@ -676,6 +862,11 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
     background: var(--ice);
     transition: all 300ms var(--ease);
   }
+
+  .footer-inner { grid-template-columns: 1fr; gap: 2.4rem; padding-bottom: 2.4rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .login { padding: 7rem 1.4rem 4rem; }
+  .login-card { padding: 2.4rem 1.8rem; }
 
   /* Drop the hero's horizontal padding so the robot can span the
      full viewport edge to edge; restore the side gutter on the text

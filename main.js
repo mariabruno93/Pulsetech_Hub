@@ -120,15 +120,15 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // Mobile toggle
-  const toggle = document.querySelector('.nav-toggle');
-  const links  = document.querySelector('.nav-links');
-  const cta    = document.querySelector('.nav-cta');
+  const toggle  = document.querySelector('.nav-toggle');
+  const links   = document.querySelector('.nav-links');
+  const actions = document.querySelector('.nav-actions');
   if (toggle) {
     toggle.addEventListener('click', () => {
       const open = links.style.display === 'flex';
       const panel = open ? 'none' : 'flex';
       links.style.display = panel;
-      if (cta) cta.style.display = open ? 'none' : 'inline-flex';
+      if (actions) actions.style.display = open ? 'none' : 'flex';
       links.style.flexDirection = 'column';
       links.style.position = 'absolute';
       links.style.top = '100%';
@@ -138,8 +138,47 @@
       links.style.padding = '1.4rem 1.8rem';
       links.style.gap = '1.1rem';
       links.style.borderTop = '1px solid var(--border-soft)';
+      if (actions) {
+        actions.style.position = 'absolute';
+        actions.style.top = 'calc(100% + 9rem)';
+        actions.style.left = '0';
+        actions.style.right = '0';
+        actions.style.background = 'rgba(5, 12, 24, 0.98)';
+        actions.style.padding = '0 1.8rem 1.4rem';
+        actions.style.gap = '1rem';
+        actions.style.flexDirection = 'column';
+        actions.style.alignItems = 'stretch';
+      }
     });
   }
+})();
+
+/* Login form (always-deny) */
+(function initLoginForm() {
+  const form = document.getElementById('login-form');
+  if (!form) return;
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const required = form.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(input => {
+      if (!input.value.trim()) {
+        valid = false;
+        input.style.borderBottomColor = 'var(--silver-dim)';
+      }
+    });
+    if (!valid) return;
+
+    // Always treat as "not registered". Hide the form + helper, reveal
+    // the rejection panel which links to the Request Access flow.
+    form.hidden = true;
+    const help = document.querySelector('.login-help');
+    if (help) help.hidden = true;
+    const message = document.getElementById('login-message');
+    if (message) message.hidden = false;
+  });
 })();
 
 /* Reveal on scroll */

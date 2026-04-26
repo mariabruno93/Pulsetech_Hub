@@ -14,7 +14,7 @@
 
   <!-- NAV -->
   <nav class="nav">
-    <a href="#top" class="nav-brand">
+    <a href="index.html#top" class="nav-brand">
       <span class="brand-dot"></span>
       <span>PULSE TECH HUB</span>
     </a>
@@ -23,7 +23,10 @@
       <li><a href="#capabilities">Capabilities</a></li>
       <li><a href="#partners">Partners</a></li>
     </ul>
-    <a href="#access" class="nav-cta">Request Access</a>
+    <div class="nav-actions">
+      <a href="login.html" class="nav-login">Login</a>
+      <a href="#access" class="nav-cta">Request Access</a>
+    </div>
     <button class="nav-toggle" aria-label="Menu">
       <span></span><span></span>
     </button>
@@ -244,17 +247,43 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="brand-dot small"></span>
-        <span>PULSE TECH HUB</span>
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <span class="brand-dot small"></span>
+          <span>PULSE TECH HUB</span>
+        </div>
+        <p class="footer-tagline">Enterprise hardware. Worldwide.</p>
       </div>
 
-      <div class="footer-meta">
-        <span>Miami, FL · Global Distribution</span>
-        <a href="mailto:procurement@pulsetechhub.com">procurement@pulsetechhub.com</a>
+      <div class="footer-contact">
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 8l9 6 9-6M3 8v10a1 1 0 001 1h16a1 1 0 001-1V8M3 8a1 1 0 011-1h16a1 1 0 011 1"/>
+          </svg>
+          <a href="mailto:procurement@pulsetechhub.com">procurement@pulsetechhub.com</a>
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 010 1.18 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          <a href="tel:+13057000800">+1 (305) 700-0800</a>
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>1450 Brickell Ave, Suite 1900<br />Miami, FL 33131</span>
+        </div>
       </div>
-
+    </div>
+    <div class="footer-bottom">
       <p class="footer-copy">© 2026 Pulse Tech Hub. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="login.html">Partner Login</a>
+        <span class="footer-dot">·</span>
+        <a href="index.html#access">Request Access</a>
+      </div>
     </div>
     <div class="footer-line" aria-hidden="true"><span></span></div>
   </footer>
