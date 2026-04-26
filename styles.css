@@ -618,7 +618,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.1fr 1.4fr;
+  grid-template-columns: 1fr 2.2fr;
   gap: 3rem;
   align-items: start;
   padding-bottom: 3rem;
@@ -649,8 +649,8 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 }
 .footer-contact {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
 }
 .footer-contact-item {
   display: flex;
@@ -835,6 +835,62 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   margin-top: 0.6rem;
 }
 
+/* ─────────────────────────────────────────
+   WHATSAPP FLOATING BUTTON
+   Sits fixed bottom-right on every page so visitors can always
+   open a chat. WhatsApp brand green is preserved (high recognition);
+   a soft repeating pulse ring draws the eye without being noisy.
+   ───────────────────────────────────────── */
+.whatsapp-fab {
+  position: fixed;
+  bottom: 1.6rem;
+  right: 1.6rem;
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.35),
+              0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 90;
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+}
+.whatsapp-fab svg {
+  position: relative;
+  z-index: 2;
+  width: 30px; height: 30px;
+  fill: currentColor;
+}
+.whatsapp-fab-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #25D366;
+  z-index: 1;
+  animation: whatsapp-pulse 2.6s ease-out infinite;
+  opacity: 0.55;
+}
+.whatsapp-fab:hover {
+  transform: scale(1.06);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5),
+              0 4px 12px rgba(0, 0, 0, 0.4);
+}
+.whatsapp-fab:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+@keyframes whatsapp-pulse {
+  0%   { transform: scale(1);    opacity: 0.55; }
+  70%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+@media (max-width: 600px) {
+  .whatsapp-fab { width: 52px; height: 52px; bottom: 1.2rem; right: 1.2rem; }
+  .whatsapp-fab svg { width: 26px; height: 26px; }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -865,6 +921,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   }
 
   .footer-inner { grid-template-columns: 1fr; gap: 2.4rem; padding-bottom: 2.4rem; }
+  .footer-contact { grid-template-columns: 1fr; gap: 1.1rem; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
   .login { padding: 7rem 1.4rem 4rem; }
   .login-card { padding: 2.4rem 1.8rem; }
