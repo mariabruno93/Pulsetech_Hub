@@ -461,19 +461,42 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 }
 .partner-mark {
   background: var(--navy-deep);
-  font-family: var(--sans);
-  font-weight: 300;
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
-  color: var(--silver);
   text-align: center;
-  padding: 2.2rem 1rem;
-  transition: all 280ms var(--ease);
+  padding: 2rem 1rem;
+  transition: background 280ms var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
 }
 .partner-mark:hover {
   background: var(--navy-card);
-  color: var(--ice);
 }
+.partner-logo {
+  display: block;
+  max-width: 96px;
+  max-height: 32px;
+  width: auto;
+  height: auto;
+  opacity: 0.78;
+  transition: opacity 280ms var(--ease);
+}
+.partner-mark:hover .partner-logo { opacity: 1; }
+.partner-name {
+  display: none;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--silver);
+  transition: color 280ms var(--ease);
+}
+.partner-mark:hover .partner-name { color: var(--ice); }
+/* If the SVG fails to load (brand not in the public icon catalog),
+   onerror flips the parent into fallback mode: hide the broken img,
+   show the text wordmark instead. */
+.partner-mark.logo-fallback .partner-logo { display: none; }
+.partner-mark.logo-fallback .partner-name { display: inline-block; }
 .partners-note {
   max-width: 1100px;
   margin: 2rem auto 0;
