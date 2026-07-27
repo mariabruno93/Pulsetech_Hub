@@ -203,12 +203,17 @@
   });
 })();
 
-/* Access form */
+/* Access form — posts to FormSubmit AJAX so submissions arrive in the
+   configured inbox without leaving the page. If the AJAX call fails
+   (network, misconfig, etc.) we fall back to a regular form submit so
+   nothing is silently lost. */
 (function initAccessForm() {
   const form = document.getElementById('access-form');
   if (!form) return;
 
-  form.addEventListener('submit', e => {
+  const ENDPOINT = 'https://formsubmit.co/ajax/pulsetechhubllc@gmail.com';
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
 
     // Basic validation
@@ -223,10 +228,28 @@
     const original = btn.textContent;
     btn.disabled = true;
     btn.style.opacity = '0.85';
-    btn.textContent = 'Request received';
+    btn.textContent = 'Sending…';
+
+    let ok = false;
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form),
+      });
+      ok = res.ok;
+    } catch (_err) {
+      ok = false;
+    }
+
+    if (ok) {
+      btn.textContent = 'Request received';
+      form.reset();
+    } else {
+      btn.textContent = 'Please try again';
+    }
 
     setTimeout(() => {
-      form.reset();
       btn.disabled = false;
       btn.style.opacity = '';
       btn.textContent = original;
