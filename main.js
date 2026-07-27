@@ -111,6 +111,38 @@
   requestAnimationFrame(step);
 })();
 
+/* Hero robot video — plays through once on load, then freezes on the
+   last frame. If the visitor scrolls the hero out of view and back in,
+   the video rewinds and plays once more. Prevents the endless loop from
+   becoming visually exhausting. */
+(function initHeroVideo() {
+  const video = document.querySelector('video.hero-img');
+  if (!video) return;
+
+  // Some browsers block autoplay on the first paint; kick it off once
+  // we have JS control.
+  const tryPlay = () => video.play().catch(() => { /* silently ignore */ });
+  if (video.paused && video.currentTime === 0) tryPlay();
+
+  // Only replay after the video has actually left the viewport once,
+  // so the initial autoplay does not immediately re-trigger.
+  let wasOutOfView = false;
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        wasOutOfView = true;
+      } else if (wasOutOfView && video.ended) {
+        video.currentTime = 0;
+        tryPlay();
+        wasOutOfView = false;
+      }
+    });
+  }, { threshold: 0 });
+
+  io.observe(video);
+})();
+
 /* Nav scroll state */
 (function initNav() {
   const nav = document.querySelector('.nav');
