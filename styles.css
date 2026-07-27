@@ -301,19 +301,19 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 .hero-visual {
   position: relative;
   width: 100%;
-  /* Match the trimmed robot.png ratio exactly so the figure fills the
-     visual frame edge-to-edge with zero letterboxing. */
   aspect-ratio: 540 / 668;
   max-width: 480px;
-  justify-self: center;
-  /* Anchor to the top of the grid row instead of centering, so the
-     robot reads higher in the hero — eye level closer to the kicker. */
+  /* Anchor at the LEFT edge of the visual column and pull inward so
+     the robot sits closer to the middle of the page instead of hugging
+     the right border. */
+  justify-self: start;
+  margin-left: -40px;
   align-self: start;
   margin-top: -1rem;
   /* Explicit navy backdrop so the video's mix-blend-mode: screen has
      something to blend against. Without this, .hero-inner's stacking
-     context (z-index: 2) isolates the blend and the mp4's black
-     backdrop stays visible as a rectangle. */
+     context isolates the blend and the mp4's black backdrop stays
+     visible as a rectangle. */
   background: var(--navy);
   isolation: isolate;
 }
@@ -330,10 +330,11 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
      background: only the bright robot pixels remain, and the visible
      rectangle of the video disappears entirely. */
   mix-blend-mode: screen;
-  /* Soft fade at BOTH ends so the top of the head and the waist-cut
-     blend smoothly into navy instead of showing a hard edge. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
+  /* Radial mask fading ALL four edges so any near-black compression
+     artifacts around the robot silhouette (which read as a subtle
+     halo after the screen blend) dissolve smoothly into the navy. */
+  -webkit-mask-image: radial-gradient(ellipse 58% 62% at 50% 48%, #000 55%, transparent 95%);
+          mask-image: radial-gradient(ellipse 58% 62% at 50% 48%, #000 55%, transparent 95%);
   user-select: none;
   -webkit-user-drag: none;
   background: transparent;
@@ -967,6 +968,7 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
     justify-self: stretch;
     max-width: 100%;
     width: 100%;
+    margin-left: 0;
   }
   .manifesto, .partners, .access { padding: 5rem 1.8rem; }
   .capabilities { padding: 5rem 0; }
