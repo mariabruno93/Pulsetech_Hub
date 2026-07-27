@@ -340,28 +340,10 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   background: transparent;
 }
 /* Slow horizontal scan highlight crossing the image every ~9s */
-.hero-visual-scan {
-  position: absolute;
-  inset: 12% 6%;
-  z-index: 3;
-  overflow: hidden;
-  pointer-events: none;
-}
-.hero-visual-scan span {
-  position: absolute;
-  left: -30%; top: 0; bottom: 0;
-  width: 30%;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(198,204,212,0) 30%,
-    rgba(198,204,212,0.18) 50%,
-    rgba(198,204,212,0) 70%,
-    transparent 100%
-  );
-  filter: blur(1px);
-  animation: visual-scan 9s linear infinite;
-}
+/* Vertical scan highlight removed — the mp4 now carries its own motion,
+   so the silver bar sweeping over the robot every 9s reads as extra
+   noise on top of the animation. */
+.hero-visual-scan { display: none; }
 @keyframes visual-breathe {
   0%, 100% { transform: scale(1);    }
   50%      { transform: scale(1.018); }
