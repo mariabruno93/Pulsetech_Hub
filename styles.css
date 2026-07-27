@@ -310,6 +310,12 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
      robot reads higher in the hero — eye level closer to the kicker. */
   align-self: start;
   margin-top: -1rem;
+  /* Explicit navy backdrop so the video's mix-blend-mode: screen has
+     something to blend against. Without this, .hero-inner's stacking
+     context (z-index: 2) isolates the blend and the mp4's black
+     backdrop stays visible as a rectangle. */
+  background: var(--navy);
+  isolation: isolate;
 }
 /* Silver halo removed — the mp4 already sits directly on the navy hero
    background via mix-blend-mode: screen, so no extra glow is needed. */
