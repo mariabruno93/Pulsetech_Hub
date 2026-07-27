@@ -305,38 +305,29 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
      visual frame edge-to-edge with zero letterboxing. */
   aspect-ratio: 540 / 668;
   max-width: 480px;
-  justify-self: end;
+  justify-self: center;
   /* Anchor to the top of the grid row instead of centering, so the
      robot reads higher in the hero — eye level closer to the kicker. */
   align-self: start;
   margin-top: -1rem;
 }
-/* Subtle silver radial behind the figure */
-.hero-visual-glow {
-  position: absolute;
-  inset: 8%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(198,204,212,0.16) 0%, rgba(157,165,177,0.06) 38%, transparent 72%);
-  filter: blur(28px);
-  z-index: 1;
-  animation: visual-glow-breathe 7s ease-in-out infinite;
-}
+/* Silver halo removed — the mp4 already sits directly on the navy hero
+   background via mix-blend-mode: screen, so no extra glow is needed. */
+.hero-visual-glow { display: none; }
 .hero-img {
   position: relative;
   z-index: 2;
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-  /* Silver drop-shadows following the video silhouette (works on the
-     bright robot; the mp4's black backdrop contributes almost none). */
-  filter:
-    drop-shadow(0 0 14px rgba(198,204,212,0.22))
-    drop-shadow(0 0 38px rgba(157,165,177,0.14));
+  /* Screen fuses the mp4's pure-black backdrop into the navy hero
+     background: only the bright robot pixels remain, and the visible
+     rectangle of the video disappears entirely. */
+  mix-blend-mode: screen;
   /* Soft fade at BOTH ends so the top of the head and the waist-cut
      blend smoothly into navy instead of showing a hard edge. */
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
           mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
-  /* No CSS breathing — the mp4 already carries its own subtle motion. */
   user-select: none;
   -webkit-user-drag: none;
   background: transparent;
